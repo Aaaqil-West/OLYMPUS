@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympus Academy - Divine Learning & Wellness</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #0f0c29 0%, #24243e 50%, #302b63 100%);
+            color: #ffd700;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .redirect-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        .redirect-btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .redirect-btn:hover {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1e3c72;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="redirect-container">
+        <h1>⚡ Welcome to Olympus ⚡</h1>
+        <p>Redirecting to Mount Olympus...</p>
+        <a href="OLYMPUS/olympus-hub.html" class="redirect-btn">Enter Mount Olympus</a>
+    </div>
+    
+    <script>
+        // Auto-redirect after 2 seconds
+        setTimeout(() => {
+            window.location.href = 'OLYMPUS/olympus-hub.html';
+        }, 2000);
+    </script>
+</body>
+</html>

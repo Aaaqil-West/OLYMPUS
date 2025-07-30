@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLYMPUS ACADEMY - Divine Learning Platform</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/academy-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="../OLYMPUS/olympus-hub.html" class="hub-link">← Return to Mount Olympus</a>
+        </nav>
+        <div class="header">
+            <h1>🏛️ OLYMPUS ACADEMY</h1>
+            <p>🎮 Divine Learning Adventure</p>
+            <div class="player-info">
+                <div class="avatar" id="playerAvatar">🏛️</div>
+                <div class="player-details">
+                    <div class="player-name">Athena's Scholar</div>
+                    <div class="health-bar">
+                        <div class="health-fill" id="healthBar" style="width: 100%;"></div>
+                    </div>
+                    <div class="mana-bar">
+                        <div class="mana-fill" id="manaBar" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard">
+            <div id="learningStats" class="learning-stats">
+                <div class="stat-card glow">
+                    <div class="stat-icon">🔥</div>
+                    <div class="stat-value" id="studyStreak">0</div>
+                    <div class="stat-label">Divine Streak</div>
+                </div>
+                <div class="stat-card glow">
+                    <div class="stat-icon">✨</div>
+                    <div class="stat-value" id="totalXP">0</div>
+                    <div class="stat-label">Divine Power</div>
+                </div>
+                <div class="stat-card glow" onclick="levelUp()" style="cursor: pointer; position: relative;">
+                    <div class="stat-icon">🎆</div>
+                    <div class="stat-value" id="currentLevel">1</div>
+                    <div class="stat-label">Ascend</div>
+                    <div class="xp-progress-bar" style="position: absolute; bottom: 5px; left: 5px; right: 5px; height: 4px; background: rgba(0,0,0,0.3); border-radius: 2px; overflow: hidden;">
+                        <div class="xp-progress-fill" id="xpProgressBar" style="height: 100%; background: linear-gradient(90deg, #ffd700, #ffed4e); width: 0%; transition: width 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div class="stat-card glow">
+                    <div class="stat-icon">🪙</div>
+                    <div class="stat-value" id="coins">0</div>
+                    <div class="stat-label">Drachmas</div>
+                </div>
+                <div class="stat-card glow">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value" id="accuracy">0%</div>
+                    <div class="stat-label">Divine Favor</div>
+                </div>
+            </div>
+            
+            <div class="daily-quest">
+                <h3>🏺 Divine Oracle's Quest</h3>
+                <div class="quest-item" id="dailyQuest">
+                    <span>⚡ Complete 3 divine study sessions</span>
+                    <div class="quest-progress">
+                        <div class="quest-fill" id="questProgress" style="width: 0%;"></div>
+                    </div>
+                    <span class="quest-reward">+500 Divine Power 🪙</span>
+                </div>
+            </div>
+            
+            <div class="personalization">
+                <h3>🎨 Personalize</h3>
+                <div class="personalization-options">
+                    <button onclick="setGoals()" class="personalize-btn">🎯 Sacred Vows</button>
+                    <button onclick="showGodSelection()" class="personalize-btn">🏛️ Choose Patron</button>
+                    <button onclick="showDivineShop()" class="personalize-btn">🛍️ Divine Shop</button>
+                    <button onclick="showAIInsights()" class="personalize-btn">🤖 AI Insights</button>
+                    <button onclick="studyReminders()" class="personalize-btn">🔔 Divine Calls</button>
+                </div>
+            </div>
+            
+            <div class="curriculum-filter">
+                <h3>📚 Divine Curriculum Selection</h3>
+                <div class="filter-tabs curriculum-filter">
+                    <div class="filter-tab active" data-category="all" onclick="filterCurriculum('all')">🌟 All</div>
+                    <div class="filter-tab" data-category="igcse" onclick="filterCurriculum('igcse')">🎓 IGCSE</div>
+                    <div class="filter-tab" data-category="kcpe" onclick="filterCurriculum('kcpe')">🏫 KCPE</div>
+                    <div class="filter-tab" data-category="kcse" onclick="filterCurriculum('kcse')">📖 KCSE</div>
+                    <div class="filter-tab" data-category="alevel" onclick="filterCurriculum('alevel')">🏆 A-Level</div>
+                    <div class="filter-tab" data-category="ib" onclick="filterCurriculum('ib')">🌍 IB</div>
+                    <div class="filter-tab" data-category="university" onclick="filterCurriculum('university')">🏛️ University</div>
+                    <div class="filter-tab" data-category="language" onclick="filterCurriculum('language')">🗣️ Languages</div>
+                </div>
+                
+                <!-- Quick Filters -->
+                <div style="margin: 1rem 0;">
+                    <h4 style="color: #cd853f; margin: 0.5rem 0; font-size: 0.9rem;">⚡ Quick Filters</h4>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button onclick="quickFilter('popular')" class="filter-tab" style="font-size: 0.8rem; padding: 0.25rem 0.75rem;">🔥 Popular</button>
+                        <button onclick="quickFilter('beginner')" class="filter-tab" style="font-size: 0.8rem; padding: 0.25rem 0.75rem;">🌱 Beginner</button>
+                        <button onclick="quickFilter('advanced')" class="filter-tab" style="font-size: 0.8rem; padding: 0.25rem 0.75rem;">🏆 Advanced</button>
+                        <button onclick="quickFilter('recent')" class="filter-tab" style="font-size: 0.8rem; padding: 0.25rem 0.75rem;">🕰️ Recent</button>
+                    </div>
+                </div>
+                
+                <!-- Subject Category Filters -->
+                <div id="subjectCategoryFilters"></div>
+                <div class="university-filters" id="universityFilters" style="display: none; margin-top: 1rem;">
+                    <h4 style="color: #cd853f; margin-bottom: 0.5rem;">🎓 University Specializations</h4>
+                    <div class="filter-tabs">
+                        <div class="filter-tab" onclick="filterUniversity('all')">🌟 All</div>
+                        <div class="filter-tab" onclick="filterUniversity('medicine')">⚕️ Medicine</div>
+                        <div class="filter-tab" onclick="filterUniversity('law')">⚖️ Law</div>
+                        <div class="filter-tab" onclick="filterUniversity('engineering')">🔧 Engineering</div>
+                        <div class="filter-tab" onclick="filterUniversity('business')">💼 Business</div>
+                        <div class="filter-tab" onclick="filterUniversity('computer')">💻 Computer Science</div>
+                        <div class="filter-tab" onclick="filterUniversity('economics')">📈 Economics</div>
+                        <div class="filter-tab" onclick="filterUniversity('accounting')">🧮 Accounting</div>
+                        <div class="filter-tab" onclick="filterUniversity('finance')">💰 Finance</div>
+                        <div class="filter-tab" onclick="filterUniversity('graphic_design')">🎨 Graphic Design</div>
+                        <div class="filter-tab" onclick="filterUniversity('architecture')">🏗️ Architecture</div>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <div style="position: relative;">
+                        <input type="text" id="subjectSearch" placeholder="🔍 Search subjects, chapters, or topics..." oninput="filterSubjects()" style="width: 100%; padding-right: 2.5rem;">
+                        <button onclick="clearSearch()" style="position: absolute; right: 0.5rem; top: 50%; transform: translateY(-50%); background: none; border: none; color: #666; cursor: pointer; font-size: 1.2rem;">✕</button>
+                    </div>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                
+                <!-- Current Subject Display -->
+                <div id="currentSubjectDisplay"></div>
+                
+                <!-- Subject Grid -->
+                <div id="subjectGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;"></div>
+
+                <select id="subjectSelect" style="display: none;">
+                    <option value="math">IGCSE Mathematics</option>
+                    <option value="biology">IGCSE Biology</option>
+                    <option value="chemistry">IGCSE Chemistry</option>
+                    <option value="physics">IGCSE Physics</option>
+                    <option value="english">IGCSE English</option>
+                </select>
+            </div>
+            
+            <div class="study-grid">
+                <div class="study-card" onclick="startStudy('flashcards')">
+                    <div style="font-size: 3rem;">📜</div>
+                    <h3>Sacred Scrolls</h3>
+                    <p>Divine flashcards blessed by Athena</p>
+                </div>
+                <div class="study-card" onclick="startStudy('quiz')">
+                    <div style="font-size: 3rem;">🏺</div>
+                    <h3>Oracle's Test</h3>
+                    <p>Challenge yourself with divine trials</p>
+                </div>
+                <div class="study-card" onclick="startStudy('text')">
+                    <div style="font-size: 3rem;">📚</div>
+                    <h3>Divine Texts</h3>
+                    <p>Sacred knowledge from the gods</p>
+                </div>
+                <div class="study-card" onclick="startStudy('video')">
+                    <div style="font-size: 3rem;">🔮</div>
+                    <h3>Visions of Gods</h3>
+                    <p>Divine teachings through mystical visions</p>
+                </div>
+                <div class="study-card" onclick="startStudy('timer')">
+                    <div style="font-size: 3rem;">⏳</div>
+                    <h3>Chronos Timer</h3>
+                    <p>Master time like the gods</p>
+                </div>
+                <div class="study-card" onclick="startStudy('notes')">
+                    <div style="font-size: 3rem;">🪶</div>
+                    <h3>Divine Quill</h3>
+                    <p>Take notes with Hermes' blessing</p>
+                </div>
+                <div class="study-card" onclick="startStudy('battle')">
+                    <div style="font-size: 3rem;">⚔️</div>
+                    <h3>Ares' Challenge</h3>
+                    <p>Battle monsters with knowledge</p>
+                </div>
+                <div class="study-card" onclick="startStudy('treasure')">
+                    <div style="font-size: 3rem;">🏴‍☠️</div>
+                    <h3>Golden Fleece</h3>
+                    <p>Hunt for divine treasures</p>
+                </div>
+                <div class="study-card" onclick="startStudy('spaced')">
+                    <div style="font-size: 3rem;">🔄</div>
+                    <h3>Spaced Repetition</h3>
+                    <p>AI-optimized review system</p>
+                </div>
+                <div class="study-card" onclick="startStudy('gamified')">
+                    <div style="font-size: 3rem;">🎮</div>
+                    <h3>Study Games</h3>
+                    <p>Learn through divine play</p>
+                </div>
+                <div class="study-card" onclick="startStudy('adaptive')">
+                    <div style="font-size: 3rem;">🎯</div>
+                    <h3>Adaptive Learning</h3>
+                    <p>AI adjusts to your level</p>
+                </div>
+                <div class="study-card" onclick="startStudy('voice')">
+                    <div style="font-size: 3rem;">🎤</div>
+                    <h3>Voice Study</h3>
+                    <p>Audio learning with Apollo</p>
+                </div>
+                <div class="study-card" onclick="startStudy('analytics')">
+                    <div style="font-size: 3rem;">📊</div>
+                    <h3>Learning Analytics</h3>
+                    <p>Oracle reveals your patterns</p>
+                </div>
+                <div class="study-card" onclick="startStudy('racing')">
+                    <div style="font-size: 3rem;">🏁</div>
+                    <h3>Speed Learning</h3>
+                    <p>Race with Hermes' speed</p>
+                </div>
+                <div class="study-card" onclick="startStudy('collaborative')">
+                    <div style="font-size: 3rem;">👥</div>
+                    <h3>Group Study</h3>
+                    <p>Learn with divine council</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Study Interface -->
+        <div id="studyInterface" class="study-interface">
+            <button onclick="endStudy()" class="back-btn">← Return to Olympus</button>
+            <div id="contentArea" class="content-area">
+                <!-- Dynamic content loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading divine content...</div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="error-modal" style="display: none;">
+        <div class="error-content">
+            <div class="error-icon">⚠️</div>
+            <div class="error-title">Divine Intervention Required</div>
+            <div class="error-message" id="errorMessage">Something went wrong</div>
+            <button onclick="closeErrorModal()" class="error-btn">Understood</button>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal" style="display: none;">
+        <div class="confirm-content">
+            <div class="confirm-icon">❓</div>
+            <div class="confirm-title">Divine Confirmation</div>
+            <div class="confirm-message" id="confirmMessage">Are you sure?</div>
+            <div class="confirm-buttons">
+                <button onclick="confirmAction(true)" class="confirm-btn yes">Yes</button>
+                <button onclick="confirmAction(false)" class="confirm-btn no">No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- XP Notification -->
+    <div id="xpNotification" class="xp-notification" style="display: none;">
+        <div class="xp-notification-content">
+            <span id="xpNotificationText">+0 XP</span>
+        </div>
+    </div>
+
+    <!-- Achievement Panel -->
+    <div id="achievementPanel" class="achievement-panel" style="display: none;">
+        <div class="achievement-notification">
+            <div id="achievementIcon" style="font-size: 3rem;">🏆</div>
+            <div id="achievementText">Achievement Unlocked!</div>
+        </div>
+    </div>
+
+    <!-- God Selection Modal -->
+    <div id="godModal" class="god-modal" style="display: none;">
+        <div class="god-modal-content">
+            <h2>🏛️ Choose Your Divine Patron</h2>
+            <p class="modal-subtitle">Select a Greek god to guide your learning journey</p>
+            <div id="godsGrid" class="gods-grid">
+                <!-- Gods will be loaded here -->
+            </div>
+            <button onclick="closeGodModal()" class="close-modal-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Divine Shop Modal -->
+    <div id="shopModal" class="god-modal" style="display: none;">
+        <div class="god-modal-content">
+            <div id="shopContent">
+                <!-- Shop content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="../assets/js/academy.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympus Academy Hub ⚡</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../assets/css/olympus-styles.css">
+</head>
+<body>
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>⚡ Enter the Divine Realm ⚡</h2>
+            <p>Prove your worthiness to ascend Mount Olympus</p>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Divine Name" required>
+                <input type="password" id="password" placeholder="Sacred Password" required>
+                <button type="submit">Ascend to Olympus</button>
+            </form>
+            <p class="hint">Enter any username and password to access Olympus</p>
+        </div>
+    </div>
+
+    <div class="hub-container" id="hub-content" style="display: none;">
+        <header class="hub-header">
+            <div class="user-info">
+                <span id="welcome-user">Welcome, Divine One</span>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+            <h1>⚡ Mount Olympus - Realm of the Gods ⚡</h1>
+            <p>Ascend to divine wisdom and eternal wellness</p>
+        </header>
+
+        <main class="hub-main">
+            <div class="portal-grid">
+                <div class="portal academy-portal" onclick="goToAcademy()">
+                    <div class="portal-icon">🏛️</div>
+                    <h2>Olympus Academy</h2>
+            
+                    <p>Seek wisdom from the Olympians. Master divine learning through sacred courses and celestial challenges</p>
+                    <button class="portal-btn">Enter Sacred Academy</button>
+                </div>
+
+                <div class="portal wellness-portal" onclick="goToWellness()">
+                    <div class="portal-icon">🌿</div>
+                    <h2>Sanctuary of Apollo</h2>
+                    <h3>Divine Healing Center</h3>
+                    <p>Find healing and harmony in Apollo's sacred sanctuary. Restore your spirit with divine guidance and celestial peace</p>
+                    <button class="portal-btn">Enter Divine Sanctuary</button>
+                </div>
+
+                <div class="portal community-portal" onclick="goToAgora()">
+                    <div class="portal-icon">🌟</div>
+                    <h2>Sacred Agora</h2>
+                    <h3>Divine Community</h3>
+                    <p>Join fellow souls in the sacred marketplace of wisdom. Share your journey, find support, and inspire others</p>
+                    <button class="portal-btn">Enter Divine Community</button>
+                </div>
+            </div>
+
+            <div class="hub-info">
+                <h3>⚡ The Divine Realm of Olympus ⚡</h3>
+                <p>Welcome, mortal, to the sacred Mount Olympus. Here, under the watchful eyes of the gods, you shall find both wisdom and wellness. Athena's temple offers divine knowledge, while Apollo's sanctuary provides healing for mind and soul.</p>
+            </div>
+        </main>
+    </div>
+
+    <div class="divine-footer">
+        <p>✨ Blessed by Zeus, guided by wisdom, healed by light ✨</p>
+    </div>
+
+    <script src="../assets/js/olympus-hub.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agora - Divine Community 🏛️</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../assets/css/agora-styles.css">
+</head>
+<body>
+    <div class="agora-container">
+        <header class="agora-header">
+            <h1>🌟 The Sacred Agora 🌟</h1>
+            <p>Where divine souls gather to share wisdom and support</p>
+            <button onclick="goToOlympus()" class="olympus-btn">⚡ Return to Olympus</button>
+        </header>
+
+        <nav class="agora-nav">
+            <button onclick="showSection('feed')" class="nav-btn active">📜 Community Feed</button>
+            <button onclick="showSection('share')" class="nav-btn">✨ Share Wisdom</button>
+            <button onclick="showSection('circles')" class="nav-btn">🤝 Support Circles</button>
+            <button onclick="showSection('mentorship')" class="nav-btn">🌟 Divine Mentorship</button>
+            <button onclick="showSection('achievements')" class="nav-btn">🏆 Divine Achievements</button>
+        </nav>
+
+        <main class="agora-main">
+            <!-- Community Feed Section -->
+            <section id="feed" class="agora-section">
+                <div class="feed-header">
+                    <h2>Community Wisdom Feed</h2>
+                    <p>Anonymous sharing of hope, progress, and divine inspiration</p>
+                </div>
+                <div id="posts-container" class="posts-container">
+                    <!-- Posts will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Share Wisdom Section -->
+            <section id="share" class="agora-section hidden">
+                <div class="share-header">
+                    <h2>Share Your Divine Wisdom</h2>
+                    <p>Inspire others with your journey (completely anonymous)</p>
+                </div>
+                <div class="share-form">
+                    <select id="post-type" class="form-select">
+                        <option value="inspiration">💫 Inspiration</option>
+                        <option value="progress">📈 Progress Update</option>
+                        <option value="gratitude">🙏 Gratitude</option>
+                        <option value="support">🤗 Seeking Support</option>
+                        <option value="tip">💡 Wellness Tip</option>
+                    </select>
+                    <textarea id="post-content" placeholder="Share your wisdom with the community..." maxlength="280"></textarea>
+                    <div class="char-count">
+                        <span id="char-counter">280</span> characters remaining
+                    </div>
+                    <button onclick="sharePost()" class="share-btn">Share with Community</button>
+                </div>
+            </section>
+
+            <!-- Support Circles Section -->
+            <section id="circles" class="agora-section hidden">
+                <div class="circles-header">
+                    <h2>Divine Support Circles</h2>
+                    <p>Join themed communities for focused support</p>
+                </div>
+                <div class="circles-grid">
+                    <div class="circle-card" onclick="joinCircle('anxiety')">
+                        <div class="circle-icon">🌊</div>
+                        <h3>Calm Waters Circle</h3>
+                        <p>For those navigating anxiety and finding peace</p>
+                        <span class="member-count">127 divine souls</span>
+                    </div>
+                    <div class="circle-card" onclick="joinCircle('depression')">
+                        <div class="circle-icon">🌅</div>
+                        <h3>Dawn Seekers Circle</h3>
+                        <p>Supporting each other through dark times toward light</p>
+                        <span class="member-count">89 divine souls</span>
+                    </div>
+                    <div class="circle-card" onclick="joinCircle('wellness')">
+                        <div class="circle-icon">🌿</div>
+                        <h3>Sacred Wellness Circle</h3>
+                        <p>Sharing wellness practices and healthy habits</p>
+                        <span class="member-count">203 divine souls</span>
+                    </div>
+                    <div class="circle-card" onclick="joinCircle('mindfulness')">
+                        <div class="circle-icon">🧘</div>
+                        <h3>Mindful Spirits Circle</h3>
+                        <p>Meditation, mindfulness, and inner peace</p>
+                        <span class="member-count">156 divine souls</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mentorship Section -->
+            <section id="mentorship" class="agora-section hidden">
+                <div class="mentorship-header">
+                    <h2>Divine Mentorship Program</h2>
+                    <p>Connect with wise souls on similar journeys</p>
+                </div>
+                
+                <div class="mentorship-tabs">
+                    <button onclick="showMentorshipTab('seek')" class="mentor-tab-btn active">🙏 Seek Guidance</button>
+                    <button onclick="showMentorshipTab('offer')" class="mentor-tab-btn">✨ Offer Wisdom</button>
+                    <button onclick="showMentorshipTab('connections')" class="mentor-tab-btn">🤝 My Connections</button>
+                </div>
+
+                <div id="seek-guidance" class="mentorship-tab">
+                    <h3>Find Your Divine Guide</h3>
+                    <p>Connect with someone who has walked a similar path</p>
+                    <div class="mentor-matching">
+                        <select id="guidance-area" class="mentor-select">
+                            <option value="">What area would you like guidance in?</option>
+                            <option value="anxiety">Managing Anxiety</option>
+                            <option value="depression">Overcoming Depression</option>
+                            <option value="stress">Stress Management</option>
+                            <option value="relationships">Healthy Relationships</option>
+                            <option value="self-care">Self-Care Practices</option>
+                            <option value="mindfulness">Mindfulness & Meditation</option>
+                        </select>
+                        <button onclick="findMentor()" class="mentor-btn">Find Divine Guide</button>
+                    </div>
+                    <div id="mentor-matches" class="mentor-matches"></div>
+                </div>
+
+                <div id="offer-wisdom" class="mentorship-tab hidden">
+                    <h3>Share Your Divine Wisdom</h3>
+                    <p>Help others by sharing your journey and insights</p>
+                    <div class="mentor-signup">
+                        <h4>Areas where you can offer guidance:</h4>
+                        <div class="expertise-checkboxes">
+                            <label><input type="checkbox" value="anxiety"> Managing Anxiety</label>
+                            <label><input type="checkbox" value="depression"> Overcoming Depression</label>
+                            <label><input type="checkbox" value="stress"> Stress Management</label>
+                            <label><input type="checkbox" value="relationships"> Healthy Relationships</label>
+                            <label><input type="checkbox" value="self-care"> Self-Care Practices</label>
+                            <label><input type="checkbox" value="mindfulness"> Mindfulness & Meditation</label>
+                        </div>
+                        <textarea id="mentor-bio" placeholder="Share a brief message about your journey and how you'd like to help others (optional)..." maxlength="200"></textarea>
+                        <button onclick="becomeMentor()" class="mentor-btn">Become Divine Guide</button>
+                    </div>
+                </div>
+
+                <div id="connections" class="mentorship-tab hidden">
+                    <h3>Your Divine Connections</h3>
+                    <div id="mentor-connections" class="connections-container">
+                        <!-- Connections will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section id="achievements" class="agora-section hidden">
+                <div class="achievements-header">
+                    <h2>Divine Achievements</h2>
+                    <p>Celebrate your wellness journey milestones</p>
+                </div>
+                <div id="achievements-container" class="achievements-container">
+                    <!-- Achievements will be loaded here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../assets/js/agora.js"></script>
+</body>
+</html>
