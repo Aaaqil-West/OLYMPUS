@@ -685,13 +685,29 @@ input[type="range"]::-webkit-slider-thumb {
     margin: 2rem 0;
 }
 
+.game-help-btn {
+    background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.game-help-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+}
+
 .game-card {
     background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(42,42,42,0.7));
     padding: 2rem;
     border-radius: 20px;
     text-align: center;
     border: 2px solid rgba(255,179,71,0.2);
-    cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -1113,6 +1129,13 @@ input[type="range"]::-webkit-slider-thumb {
     animation: matchGlow 0.5s ease-in-out;
 }
 
+.memory-card.flipped {
+    background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+    border-color: #60a5fa;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(59,130,246,0.4);
+}
+
 @keyframes matchGlow {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,215,0,0.8); }
@@ -1325,6 +1348,54 @@ input[type="range"]::-webkit-slider-thumb {
 #game-area {
     margin-top: 2rem;
     animation: fadeIn 0.5s ease-out;
+}
+
+/* Game help styling */
+.game-help {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(42,42,42,0.7));
+    border-radius: 20px;
+    border: 2px solid rgba(255,179,71,0.3);
+    margin-top: 2rem;
+}
+
+.game-help h3 {
+    color: var(--apollo-gold);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-shadow: 0 0 15px rgba(255,179,71,0.5);
+}
+
+.help-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.help-content h4 {
+    color: var(--sun-yellow);
+    margin: 1.5rem 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.help-content p {
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.help-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.help-actions button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
 }
 
 /* Responsive game styles */

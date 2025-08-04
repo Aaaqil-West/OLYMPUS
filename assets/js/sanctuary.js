@@ -997,6 +997,50 @@ let breathingGameActive = false;
 let moodMonsterHealth = 100;
 let puzzlePieces = [];
 
+// Game descriptions for help feature
+const gameDescriptions = {
+    memory: {
+        title: '🧠 Memory Palace',
+        description: 'Train your memory by finding matching pairs of symbols. Click cards to flip them and find matches.',
+        benefits: 'Enhances memory, improves focus, reduces anxiety through mindful concentration'
+    },
+    puzzle: {
+        title: '🧩 Zen Number Puzzle',
+        description: 'Arrange numbers 1-8 in order by sliding tiles. Click tiles next to the empty space to move them.',
+        benefits: 'Develops problem-solving skills, promotes patience, creates a meditative state'
+    },
+    'breathing-game': {
+        title: '🌬️ Breath Master',
+        description: 'Follow breathing patterns and click at the right moment when the circle expands.',
+        benefits: 'Improves breath control, increases mindfulness, reduces stress and anxiety'
+    },
+    'mood-monster': {
+        title: '👾 Mood Monster Battle',
+        description: 'Defeat negative thoughts using positive actions like gratitude, self-care, and exercise.',
+        benefits: 'Teaches coping strategies, reinforces positive behaviors, gamifies mental health practices'
+    },
+    'word-calm': {
+        title: '📝 Word Calm',
+        description: 'Find peaceful words (PEACE, CALM, JOY, HOPE, LOVE) hidden in a letter grid.',
+        benefits: 'Promotes positive thinking, improves focus, reinforces calming concepts'
+    },
+    'color-therapy': {
+        title: '🎨 Color Therapy',
+        description: 'Watch and repeat color sequences to improve memory and enjoy therapeutic effects of colors.',
+        benefits: 'Enhances memory, provides color therapy benefits, improves concentration'
+    },
+    'gratitude-garden': {
+        title: '🌱 Gratitude Garden',
+        description: 'Share what you\'re grateful for to grow a beautiful flower garden.',
+        benefits: 'Cultivates gratitude, improves mood, creates positive associations'
+    },
+    'zen-stones': {
+        title: '🪨 Zen Stones',
+        description: 'Balance stones by clicking at the right moment. Requires focus and patience.',
+        benefits: 'Develops patience, improves focus, promotes mindfulness and inner peace'
+    }
+};
+
 function playGame(gameType) {
     const gameArea = document.getElementById('game-area');
     
@@ -1028,6 +1072,28 @@ function playGame(gameType) {
     }
 }
 
+function showGameHelp(gameType) {
+    const game = gameDescriptions[gameType];
+    if (!game) return;
+    
+    const gameArea = document.getElementById('game-area');
+    gameArea.innerHTML = `
+        <div class="game-help">
+            <h3>${game.title}</h3>
+            <div class="help-content">
+                <h4>How to Play:</h4>
+                <p>${game.description}</p>
+                <h4>Mental Health Benefits:</h4>
+                <p>${game.benefits}</p>
+                <div class="help-actions">
+                    <button onclick="playGame('${gameType}')">Play Game</button>
+                    <button onclick="showWellnessGames()">Back to Games</button>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
 function startMemoryGame(gameArea) {
     const symbols = ['🌸', '🌺', '🌻', '🌷', '🌹', '🌼', '🍀', '🌿'];
     memoryCards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
@@ -1056,32 +1122,40 @@ function flipCard(index) {
     if (flippedCards.length >= 2 || flippedCards.includes(index)) return;
     
     const card = document.querySelector(`[data-index="${index}"]`);
+    if (card.classList.contains('matched')) return;
+    
     card.querySelector('.card-front').classList.add('hidden');
     card.querySelector('.card-back').classList.remove('hidden');
+    card.classList.add('flipped');
     flippedCards.push(index);
     
     if (flippedCards.length === 2) {
-        setTimeout(checkMatch, 1000);
+        setTimeout(checkMatch, 800);
     }
 }
 
 function checkMatch() {
     const [first, second] = flippedCards;
+    const firstCard = document.querySelector(`[data-index="${first}"]`);
+    const secondCard = document.querySelector(`[data-index="${second}"]`);
+    
     if (memoryCards[first] === memoryCards[second]) {
         memoryScore += 10;
         document.getElementById('memory-score').textContent = memoryScore;
-        document.querySelectorAll(`[data-index="${first}"], [data-index="${second}"]`)
-            .forEach(card => card.classList.add('matched'));
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
         
         if (document.querySelectorAll('.matched').length === memoryCards.length) {
             setTimeout(() => alert('🎉 Congratulations! You completed the Memory Palace!'), 500);
         }
     } else {
-        document.querySelectorAll(`[data-index="${first}"], [data-index="${second}"]`)
-            .forEach(card => {
-                card.querySelector('.card-front').classList.remove('hidden');
-                card.querySelector('.card-back').classList.add('hidden');
-            });
+        firstCard.querySelector('.card-front').classList.remove('hidden');
+        firstCard.querySelector('.card-back').classList.add('hidden');
+        firstCard.classList.remove('flipped');
+        
+        secondCard.querySelector('.card-front').classList.remove('hidden');
+        secondCard.querySelector('.card-back').classList.add('hidden');
+        secondCard.classList.remove('flipped');
     }
     flippedCards = [];
 }
