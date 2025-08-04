@@ -80,8 +80,12 @@ function addDivineEffects() {
 
 // Divine initialization
 document.addEventListener('DOMContentLoaded', function() {
-    // Always show login first
-    showLogin();
+    // Check if user is already logged in
+    if (isLoggedIn) {
+        showHub();
+    } else {
+        showLogin();
+    }
     
     // Initialize login form after DOM is ready
     setTimeout(initLogin, 100);
