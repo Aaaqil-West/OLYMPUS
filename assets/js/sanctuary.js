@@ -118,19 +118,16 @@ const selfCareActivities = {
 
 function hideAllSections() {
     document.querySelectorAll('.section').forEach(section => {
-        section.style.opacity = '0';
-        setTimeout(() => section.classList.add('hidden'), 200);
+        section.classList.add('hidden');
     });
 }
 
 function showSection(sectionId) {
     hideAllSections();
-    setTimeout(() => {
-        const section = document.getElementById(sectionId);
-        section.classList.remove('hidden');
-        section.style.opacity = '0';
-        setTimeout(() => section.style.opacity = '1', 50);
-    }, 250);
+    const section = document.getElementById(sectionId);
+    section.classList.remove('hidden');
+    section.style.opacity = '0';
+    setTimeout(() => section.style.opacity = '1', 50);
 }
 
 function showMenu() {
@@ -139,7 +136,7 @@ function showMenu() {
 
 function showMoodCheck() {
     showSection('mood-check');
-    setTimeout(() => document.getElementById('mood-result').innerHTML = '', 300);
+    document.getElementById('mood-result').innerHTML = '';
 }
 
 function updateIntensity(value) {
@@ -182,7 +179,7 @@ function logMood(mood, intensity = 5) {
 
 function showCopingStrategies() {
     showSection('coping-strategies');
-    setTimeout(() => document.getElementById('strategies-result').innerHTML = '', 300);
+    document.getElementById('strategies-result').innerHTML = '';
 }
 
 function showStrategies(category) {
@@ -200,10 +197,8 @@ function showStrategies(category) {
 
 function showAffirmation() {
     showSection('affirmation');
-    setTimeout(() => {
-        getNewAffirmation();
-        displaySavedAffirmations();
-    }, 300);
+    getNewAffirmation();
+    displaySavedAffirmations();
 }
 
 function showSelfCare() {
@@ -212,7 +207,7 @@ function showSelfCare() {
 
 function showGoalSetting() {
     showSection('goal-setting');
-    setTimeout(() => displayGoals(), 300);
+    displayGoals();
 }
 
 function showWellnessGames() {
@@ -312,7 +307,7 @@ function getNewAffirmation() {
 
 function showMoodTracker() {
     showSection('mood-tracker');
-    setTimeout(() => displayMoodLog(), 300);
+    displayMoodLog();
 }
 
 function displayMoodLog() {
@@ -389,7 +384,7 @@ function showEmergencyResources() {
 
 function showBreathingExercise() {
     showSection('breathing-exercise');
-    setTimeout(() => resetBreathing(), 300);
+    resetBreathing();
 }
 
 let breathingActive = false;
@@ -497,7 +492,7 @@ function resetBreathing() {
 // New Feature Functions
 function showThoughtRecord() {
     showSection('thought-record');
-    setTimeout(() => displayThoughtHistory(), 300);
+    displayThoughtHistory();
 }
 
 function saveThoughtRecord() {
@@ -542,7 +537,7 @@ function displayThoughtHistory() {
 
 function showAnxietyTracker() {
     showSection('anxiety-tracker');
-    setTimeout(() => displayAnxietyInsights(), 300);
+    displayAnxietyInsights();
 }
 
 function toggleTrigger(trigger) {
@@ -606,7 +601,7 @@ function displayAnxietyInsights() {
 
 function showVirtualPet() {
     showSection('virtual-pet');
-    setTimeout(() => updatePetDisplay(), 300);
+    updatePetDisplay();
 }
 
 function updatePetDisplay() {
