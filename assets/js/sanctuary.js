@@ -117,20 +117,7 @@ const selfCareActivities = {
 };
 
 function loadPage(page) {
-    // Hide all sections
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('hidden');
-    });
-    
-    // Show target section
-    const targetSection = document.getElementById(page);
-    if (targetSection) {
-        targetSection.classList.remove('hidden');
-        window.location.hash = page;
-        
-        // Initialize page-specific content
-        initializePageContent(page);
-    }
+    window.location.href = page + '.html';
 }
 
 function initializePageContent(page) {
@@ -210,12 +197,122 @@ function initializePageContent(page) {
 }
 
 function showMenu() {
-    loadPage('menu');
+    window.location.href = 'index.html';
 }
 
-function initializePage() {
-    const hash = window.location.hash.substring(1) || 'menu';
-    loadPage(hash);
+// Page-specific initialization functions
+function initializeCurrentPage() {
+    const currentPage = window.location.pathname.split('/').pop().replace('.html', '') || 'index';
+    
+    switch(currentPage) {
+        case 'affirmation':
+            if (document.getElementById('affirmation-text')) {
+                getNewAffirmation();
+                displaySavedAffirmations();
+            }
+            break;
+        case 'goal-setting':
+            if (document.getElementById('goals-list')) {
+                displayGoals();
+            }
+            break;
+        case 'mood-tracker':
+            if (document.getElementById('mood-log')) {
+                displayMoodLog();
+            }
+            break;
+        case 'breathing-exercise':
+            if (document.getElementById('breathing-circle')) {
+                resetBreathing();
+            }
+            break;
+        case 'thought-record':
+            if (document.getElementById('thought-history')) {
+                displayThoughtHistory();
+            }
+            break;
+        case 'anxiety-tracker':
+            if (document.getElementById('anxiety-insights')) {
+                displayAnxietyInsights();
+            }
+            break;
+        case 'virtual-pet':
+            if (document.getElementById('pet-avatar')) {
+                updatePetDisplay();
+            }
+            break;
+        case 'ai-companion':
+            if (document.getElementById('chat-messages')) {
+                loadChatHistory();
+            }
+            break;
+        case 'sleep-tracker':
+            if (document.getElementById('sleep-insights')) {
+                displaySleepInsights();
+            }
+            break;
+        case 'safety-planning':
+            if (document.getElementById('warning-signs')) {
+                loadSafetyPlan();
+            }
+            break;
+        case 'progress-dashboard':
+            if (document.getElementById('weekly-checkins')) {
+                updateProgressStats();
+            }
+            break;
+        case 'community-hub':
+            if (document.getElementById('community-content')) {
+                loadCommunityContent();
+            }
+            break;
+        case 'art-therapy':
+            if (document.getElementById('art-canvas')) {
+                setTimeout(() => initializeCanvas(), 100);
+            }
+            break;
+        case 'education-hub':
+            if (document.getElementById('education-content')) {
+                loadEducationContent();
+            }
+            break;
+        case 'habit-tracker':
+            if (document.getElementById('habits-list')) {
+                displayHabits();
+            }
+            break;
+        case 'crisis-intervention':
+            if (document.getElementById('crisis-assessment')) {
+                assessCrisisLevel();
+            }
+            break;
+        case 'personalized-dashboard':
+            if (document.getElementById('dashboard-content')) {
+                const recommendations = generatePersonalizedRecommendations();
+                const dashboardContent = document.getElementById('dashboard-content');
+                let html = `<div class="personalized-content"><h3>🎯 Recommended for You</h3><div class="recommendations">`;
+                recommendations.forEach(rec => {
+                    html += `<div class="recommendation-card" onclick="${rec.action}"><h4>${rec.title}</h4><p>Based on your recent mood patterns</p></div>`;
+                });
+                html += `</div><div class="quick-stats"><h3>📊 Your Week at a Glance</h3><div class="stat-grid"><div class="stat-item"><span class="stat-number">${moodLog.length}</span><span class="stat-label">Total Check-ins</span></div><div class="stat-item"><span class="stat-number">${wellnessStreak}</span><span class="stat-label">Day Streak</span></div><div class="stat-item"><span class="stat-number">${habitData.length}</span><span class="stat-label">Active Habits</span></div></div></div></div>`;
+                dashboardContent.innerHTML = html;
+            }
+            break;
+        case 'wellness-games':
+            if (document.getElementById('game-area')) {
+                flippedCards = [];
+                memoryScore = 0;
+                breathingGameActive = false;
+                moodMonsterHealth = 100;
+                foundWords = [];
+                colorSequence = [];
+                playerSequence = [];
+                gardenFlowers = 0;
+                stoneBalance = 0;
+                document.getElementById('game-area').innerHTML = '';
+            }
+            break;
+    }
 }
 
 function showMoodCheck() {
@@ -2324,7 +2421,7 @@ function completeLesson(topic) {
     alert('📚 Great job learning about mental health! Knowledge is power on your healing journey.');
 }
 
-function showWellnessStreaks() { showProgressDashboard(); }
+function showWellnessStreaks() { loadPage('progress-dashboard'); }
 
 // Advanced Habit Tracker
 let habitData = JSON.parse(localStorage.getItem('habitData')) || [];
@@ -2546,7 +2643,7 @@ function showPersonalizedDashboard() {
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
-    initializePage();
+    initializeCurrentPage();
     
     // Update pet stats periodically
     setInterval(() => {

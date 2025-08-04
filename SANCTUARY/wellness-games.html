@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Games - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        <header>
+            <h1>🎮 Divine Wellness Games</h1>
+        </header>
+        <main>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon">🧠</div>
+                    <h3>Memory Palace</h3>
+                    <p>Strengthen your mind with memory games</p>
+                    <button onclick="playGame('memory')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('memory')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🧩</div>
+                    <h3>Zen Puzzles</h3>
+                    <p>Relax with calming puzzle games</p>
+                    <button onclick="playGame('puzzle')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('puzzle')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🌬️</div>
+                    <h3>Breath Master</h3>
+                    <p>Gamified breathing exercises</p>
+                    <button onclick="playGame('breathing-game')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('breathing-game')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">👾</div>
+                    <h3>Mood Monsters</h3>
+                    <p>Battle negative thoughts</p>
+                    <button onclick="playGame('mood-monster')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('mood-monster')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">📝</div>
+                    <h3>Word Calm</h3>
+                    <p>Find peaceful words in the grid</p>
+                    <button onclick="playGame('word-calm')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('word-calm')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🎨</div>
+                    <h3>Color Therapy</h3>
+                    <p>Match colors to heal your mood</p>
+                    <button onclick="playGame('color-therapy')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('color-therapy')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🌱</div>
+                    <h3>Gratitude Garden</h3>
+                    <p>Grow flowers with positive thoughts</p>
+                    <button onclick="playGame('gratitude-garden')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('gratitude-garden')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🪨</div>
+                    <h3>Zen Stones</h3>
+                    <p>Balance stones for inner peace</p>
+                    <button onclick="playGame('zen-stones')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('zen-stones')">ℹ️ Help</button>
+                </div>
+                <div class="game-card">
+                    <div class="game-icon">🔮</div>
+                    <h3>Mindful Matching</h3>
+                    <p>Match emotions with coping strategies</p>
+                    <button onclick="playGame('mindful-matching')">Play Game</button>
+                    <button class="game-help-btn" onclick="showGameHelp('mindful-matching')">ℹ️ Help</button>
+                </div>
+            </div>
+            <div id="game-area"></div>
+        </main>
+    </div>
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>

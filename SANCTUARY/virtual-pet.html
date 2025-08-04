@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divine Pet - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        <header>
+            <h1>🐕 Your Divine Companion</h1>
+        </header>
+        <main>
+            <div class="pet-container">
+                <div class="pet-display">
+                    <div id="pet-avatar">🐶</div>
+                    <div id="pet-name">Apollo Jr.</div>
+                    <div id="pet-level">Level 0</div>
+                    <div class="pet-stats">
+                        <div class="stat-bar">
+                            <label>Happiness:</label>
+                            <div class="bar"><div id="happiness-bar" class="fill"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <label>Health:</label>
+                            <div class="bar"><div id="health-bar" class="fill"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <label>Energy:</label>
+                            <div class="bar"><div id="energy-bar" class="fill"></div></div>
+                        </div>
+                        <div class="pet-currency">
+                            <span>🪙 Coins: <span id="pet-coins">20</span></span>
+                            <span>✨ XP: <span id="pet-xp">0</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pet-actions">
+                    <button onclick="feedPet()">🍖 Feed</button>
+                    <button onclick="playWithPet()">🎾 Play</button>
+                    <button onclick="petCare()">💕 Care</button>
+                    <button onclick="petWalk()">🚶 Walk</button>
+                    <button onclick="trainPet()">🎓 Train</button>
+                    <button onclick="petMeditate()">🧘 Meditate</button>
+                    <button onclick="giveTreat()">🍪 Treat</button>
+                    <button onclick="earnCoins()">🪙 Daily Coins</button>
+                </div>
+                <div id="pet-messages"></div>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>

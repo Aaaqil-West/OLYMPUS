@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Wisdom - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        <header>
+            <h1>✨ Daily Inspiration & Affirmations</h1>
+        </header>
+        <main>
+            <div id="affirmation-text"></div>
+            <div class="affirmation-controls">
+                <button onclick="getNewAffirmation()">New Affirmation</button>
+                <button onclick="saveAffirmation()">Save This One</button>
+                <button onclick="shareAffirmation()">Share</button>
+            </div>
+            <div id="saved-affirmations">
+                <h3>Your Saved Affirmations</h3>
+                <div id="saved-list"></div>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>

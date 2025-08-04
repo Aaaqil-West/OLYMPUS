@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Check - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        <header>
+            <h1>💭 Mood Oracle</h1>
+        </header>
+        <main>
+            <h2>How are you feeling right now?</h2>
+            <p>Take a moment to check in with yourself. Your feelings are valid and important.</p>
+            <div class="mood-buttons">
+                <button onclick="selectMood('anxiety')">😰 Anxious/Worried</button>
+                <button onclick="selectMood('sadness')">😢 Sad/Down</button>
+                <button onclick="selectMood('anger')">😠 Angry/Frustrated</button>
+                <button onclick="selectMood('stress')">😵 Stressed/Overwhelmed</button>
+                <button onclick="selectMood('lonely')">😔 Lonely/Isolated</button>
+                <button onclick="selectMood('confused')">😕 Confused/Lost</button>
+                <button onclick="selectMood('happy')">😊 Happy/Good</button>
+                <button onclick="selectMood('excited')">😄 Excited/Energetic</button>
+            </div>
+            <div id="mood-intensity">
+                <h3>How intense is this feeling? (1-10)</h3>
+                <input type="range" id="intensity-slider" min="1" max="10" value="5" oninput="updateIntensity(this.value)">
+                <span id="intensity-value">5</span>
+            </div>
+            <div id="mood-result"></div>
+        </main>
+    </div>
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>
