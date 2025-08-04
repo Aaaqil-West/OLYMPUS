@@ -1395,7 +1395,7 @@ function colorClick(index) {
     playerSequence.push(index);
     
     if (playerSequence[playerSequence.length - 1] !== colorSequence[playerSequence.length - 1]) {
-        document.getEledocument.getElementById('color-message').textContent = 'Try again!';
+        document.getElementById('color-message').textContent = 'Try again!';
         setTimeout(startColorSequence, 1000);
         return;
     }
