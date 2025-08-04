@@ -116,27 +116,92 @@ const selfCareActivities = {
     }
 };
 
-function hideAllSections() {
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('hidden');
-    });
-}
-
-function showSection(sectionId) {
-    hideAllSections();
-    const section = document.getElementById(sectionId);
-    section.classList.remove('hidden');
-    section.style.opacity = '0';
-    setTimeout(() => section.style.opacity = '1', 50);
+function loadPage(page) {
+    window.location.hash = page;
+    location.reload();
 }
 
 function showMenu() {
-    showSection('menu');
+    loadPage('menu');
+}
+
+function initializePage() {
+    const hash = window.location.hash.substring(1) || 'menu';
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.add('hidden');
+    });
+    
+    const targetSection = document.getElementById(hash);
+    if (targetSection) {
+        targetSection.classList.remove('hidden');
+        
+        // Initialize page-specific content
+        switch(hash) {
+            case 'affirmation':
+                getNewAffirmation();
+                displaySavedAffirmations();
+                break;
+            case 'goal-setting':
+                displayGoals();
+                break;
+            case 'mood-tracker':
+                displayMoodLog();
+                break;
+            case 'breathing-exercise':
+                resetBreathing();
+                break;
+            case 'thought-record':
+                displayThoughtHistory();
+                break;
+            case 'anxiety-tracker':
+                displayAnxietyInsights();
+                break;
+            case 'virtual-pet':
+                updatePetDisplay();
+                break;
+            case 'ai-companion':
+                loadChatHistory();
+                break;
+            case 'sleep-tracker':
+                displaySleepInsights();
+                break;
+            case 'safety-planning':
+                loadSafetyPlan();
+                break;
+            case 'progress-dashboard':
+                updateProgressStats();
+                break;
+            case 'community-hub':
+                loadCommunityContent();
+                break;
+            case 'art-therapy':
+                setTimeout(() => initializeCanvas(), 100);
+                break;
+            case 'education-hub':
+                loadEducationContent();
+                break;
+            case 'habit-tracker':
+                displayHabits();
+                break;
+            case 'crisis-intervention':
+                assessCrisisLevel();
+                break;
+            case 'personalized-dashboard':
+                const recommendations = generatePersonalizedRecommendations();
+                const dashboardContent = document.getElementById('dashboard-content');
+                let html = `<div class="personalized-content"><h3>🎯 Recommended for You</h3><div class="recommendations">`;
+                recommendations.forEach(rec => {
+                    html += `<div class="recommendation-card" onclick="${rec.action}"><h4>${rec.title}</h4><p>Based on your recent mood patterns</p></div>`;
+                });
+                html += `</div><div class="quick-stats"><h3>📊 Your Week at a Glance</h3><div class="stat-grid"><div class="stat-item"><span class="stat-number">${moodLog.length}</span><span class="stat-label">Total Check-ins</span></div><div class="stat-item"><span class="stat-number">${wellnessStreak}</span><span class="stat-label">Day Streak</span></div><div class="stat-item"><span class="stat-number">${habitData.length}</span><span class="stat-label">Active Habits</span></div></div></div></div>`;
+                dashboardContent.innerHTML = html;
+                break;
+        }
+    }
 }
 
 function showMoodCheck() {
-    showSection('mood-check');
-    document.getElementById('mood-result').innerHTML = '';
+    loadPage('mood-check');
 }
 
 function updateIntensity(value) {
@@ -178,8 +243,7 @@ function logMood(mood, intensity = 5) {
 }
 
 function showCopingStrategies() {
-    showSection('coping-strategies');
-    document.getElementById('strategies-result').innerHTML = '';
+    loadPage('coping-strategies');
 }
 
 function showStrategies(category) {
@@ -196,22 +260,19 @@ function showStrategies(category) {
 }
 
 function showAffirmation() {
-    showSection('affirmation');
-    getNewAffirmation();
-    displaySavedAffirmations();
+    loadPage('affirmation');
 }
 
 function showSelfCare() {
-    showSection('self-care');
+    loadPage('self-care');
 }
 
 function showGoalSetting() {
-    showSection('goal-setting');
-    displayGoals();
+    loadPage('goal-setting');
 }
 
 function showWellnessGames() {
-    showSection('wellness-games');
+    loadPage('wellness-games');
 }
 
 function startActivity(activityType) {
@@ -306,8 +367,7 @@ function getNewAffirmation() {
 }
 
 function showMoodTracker() {
-    showSection('mood-tracker');
-    displayMoodLog();
+    loadPage('mood-tracker');
 }
 
 function displayMoodLog() {
@@ -379,12 +439,11 @@ function removeSavedAffirmation(index) {
 }
 
 function showEmergencyResources() {
-    showSection('emergency-resources');
+    loadPage('emergency-resources');
 }
 
 function showBreathingExercise() {
-    showSection('breathing-exercise');
-    resetBreathing();
+    loadPage('breathing-exercise');
 }
 
 let breathingActive = false;
@@ -491,8 +550,7 @@ function resetBreathing() {
 
 // New Feature Functions
 function showThoughtRecord() {
-    showSection('thought-record');
-    displayThoughtHistory();
+    loadPage('thought-record');
 }
 
 function saveThoughtRecord() {
@@ -536,8 +594,7 @@ function displayThoughtHistory() {
 }
 
 function showAnxietyTracker() {
-    showSection('anxiety-tracker');
-    displayAnxietyInsights();
+    loadPage('anxiety-tracker');
 }
 
 function toggleTrigger(trigger) {
@@ -600,8 +657,7 @@ function displayAnxietyInsights() {
 }
 
 function showVirtualPet() {
-    showSection('virtual-pet');
-    updatePetDisplay();
+    loadPage('virtual-pet');
 }
 
 function updatePetDisplay() {
@@ -773,8 +829,7 @@ function showPetMessage(message) {
 }
 
 function showMeditationGarden() {
-    hideAllSections();
-    document.getElementById('meditation-garden').classList.remove('hidden');
+    loadPage('meditation-garden');
 }
 
 function startMeditation(type) {
@@ -819,9 +874,7 @@ function stopMeditation() {
 }
 
 function showAICompanion() {
-    hideAllSections();
-    document.getElementById('ai-companion').classList.remove('hidden');
-    loadChatHistory();
+    loadPage('ai-companion');
 }
 
 function loadChatHistory() {
@@ -1022,9 +1075,7 @@ function handleChatEnter(event) {
 }
 
 function showSleepTracker() {
-    hideAllSections();
-    document.getElementById('sleep-tracker').classList.remove('hidden');
-    displaySleepInsights();
+    loadPage('sleep-tracker');
 }
 
 function logSleep() {
@@ -1063,9 +1114,7 @@ function displaySleepInsights() {
 }
 
 function showSafetyPlanning() {
-    hideAllSections();
-    document.getElementById('safety-planning').classList.remove('hidden');
-    loadSafetyPlan();
+    loadPage('safety-planning');
 }
 
 function loadSafetyPlan() {
@@ -1791,9 +1840,7 @@ function resetMatchingGame() {
 }
 
 function showProgressDashboard() {
-    hideAllSections();
-    document.getElementById('progress-dashboard').classList.remove('hidden');
-    updateProgressStats();
+    loadPage('progress-dashboard');
 }
 
 function updateProgressStats() {
@@ -1844,8 +1891,7 @@ function updateAchievements() {
 
 // CBT Workshop Implementation
 function showCBTWorkshop() {
-    hideAllSections();
-    document.getElementById('cbt-workshop').classList.remove('hidden');
+    loadPage('cbt-workshop');
 }
 
 function startCBTExercise(type) {
@@ -1910,9 +1956,7 @@ function completeCBTExercise(type) {
 
 // Community Hub Implementation
 function showCommunityHub() {
-    hideAllSections();
-    document.getElementById('community-hub').classList.remove('hidden');
-    loadCommunityContent();
+    loadPage('community-hub');
 }
 
 function loadCommunityContent() {
@@ -1968,8 +2012,7 @@ function joinChallenge() {
 
 // Professional Help Finder
 function showProfessionalHelp() {
-    hideAllSections();
-    document.getElementById('professional-help').classList.remove('hidden');
+    loadPage('professional-help');
 }
 
 function findTherapists() {
@@ -2007,9 +2050,7 @@ function contactTherapist(name) {
 
 // Art Therapy Implementation
 function showArtTherapy() {
-    hideAllSections();
-    document.getElementById('art-therapy').classList.remove('hidden');
-    initializeCanvas();
+    loadPage('art-therapy');
 }
 
 function initializeCanvas() {
@@ -2066,8 +2107,7 @@ function saveArtwork() {
 
 // Music Therapy Implementation
 function showMusicTherapy() {
-    hideAllSections();
-    document.getElementById('music-therapy').classList.remove('hidden');
+    loadPage('music-therapy');
 }
 
 function playMusicTherapy(type) {
@@ -2148,9 +2188,7 @@ function stopMusic() {
 
 // Education Hub Implementation
 function showEducationHub() {
-    hideAllSections();
-    document.getElementById('education-hub').classList.remove('hidden');
-    loadEducationContent();
+    loadPage('education-hub');
 }
 
 function loadEducationContent() {
@@ -2287,9 +2325,7 @@ function showWellnessStreaks() { showProgressDashboard(); }
 let habitData = JSON.parse(localStorage.getItem('habitData')) || [];
 
 function showHabitTracker() {
-    hideAllSections();
-    document.getElementById('habit-tracker').classList.remove('hidden');
-    displayHabits();
+    loadPage('habit-tracker');
 }
 
 function addHabit() {
@@ -2372,9 +2408,7 @@ function removeHabit(habitId) {
 let crisisLevel = 0;
 
 function showCrisisIntervention() {
-    hideAllSections();
-    document.getElementById('crisis-intervention').classList.remove('hidden');
-    assessCrisisLevel();
+    loadPage('crisis-intervention');
 }
 
 function assessCrisisLevel() {
@@ -2502,55 +2536,12 @@ function generatePersonalizedRecommendations() {
 }
 
 function showPersonalizedDashboard() {
-    hideAllSections();
-    document.getElementById('personalized-dashboard').classList.remove('hidden');
-    
-    const recommendations = generatePersonalizedRecommendations();
-    const dashboardContent = document.getElementById('dashboard-content');
-    
-    let html = `
-        <div class="personalized-content">
-            <h3>🎯 Recommended for You</h3>
-            <div class="recommendations">
-    `;
-    
-    recommendations.forEach(rec => {
-        html += `
-            <div class="recommendation-card" onclick="${rec.action}">
-                <h4>${rec.title}</h4>
-                <p>Based on your recent mood patterns</p>
-            </div>
-        `;
-    });
-    
-    html += `
-            </div>
-            <div class="quick-stats">
-                <h3>📊 Your Week at a Glance</h3>
-                <div class="stat-grid">
-                    <div class="stat-item">
-                        <span class="stat-number">${moodLog.length}</span>
-                        <span class="stat-label">Total Check-ins</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">${wellnessStreak}</span>
-                        <span class="stat-label">Day Streak</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">${habitData.length}</span>
-                        <span class="stat-label">Active Habits</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    
-    dashboardContent.innerHTML = html;
+    loadPage('personalized-dashboard');
 }
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
-    showMenu();
+    initializePage();
     
     // Update pet stats periodically
     setInterval(() => {
