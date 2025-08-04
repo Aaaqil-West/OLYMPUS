@@ -2643,6 +2643,17 @@ function showPersonalizedDashboard() {
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
+    // Show loading animation
+    const loadingOverlay = document.getElementById('loading-overlay');
+    if (loadingOverlay) {
+        setTimeout(() => {
+            loadingOverlay.classList.add('hidden');
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 500);
+        }, 2000);
+    }
+    
     initializeCurrentPage();
     
     // Update pet stats periodically
