@@ -31,662 +31,108 @@
         </header>
 
         <main id="main-content">
-            <div id="menu" class="section">
-                <h2>✨ Welcome to Apollo's Divine Sanctuary ✨</h2>
-                <div class="menu-grid">
-                    <div class="menu-category">
-                        <h3>🧠 Mind & Mood</h3>
-                        <button onclick="showMoodCheck()">💭 Mood Oracle</button>
-                        <button onclick="showThoughtRecord()">📝 Thought Record</button>
-                        <button onclick="showAnxietyTracker()">😰 Anxiety Tracker</button>
-                        <button onclick="showCBTWorkshop()">🧠 CBT Workshop</button>
-                    </div>
-                    <div class="menu-category">
-                        <h3>🌱 Wellness & Care</h3>
-                        <button onclick="showSelfCare()">🌸 Self-Care Hub</button>
-                        <button onclick="showBreathingExercise()">🌬️ Sacred Breath</button>
-                        <button onclick="showMeditationGarden()">🧘 Meditation Garden</button>
-                        <button onclick="showSleepTracker()">😴 Sleep Sanctuary</button>
-                    </div>
-                    <div class="menu-category">
-                        <h3>📊 Tracking & Goals</h3>
-                        <button onclick="showMoodTracker()">📈 Mood Analytics</button>
-                        <button onclick="showGoalSetting()">🎯 Wellness Goals</button>
-                        <button onclick="showProgressDashboard()">📊 Progress Hub</button>
-                        <button onclick="showWellnessStreaks()">🔥 Wellness Streaks</button>
-                    </div>
-                    <div class="menu-category">
-                        <h3>🤝 Support & Community</h3>
-                        <button onclick="showCommunityHub()">👥 Community</button>
-                        <button onclick="showAICompanion()">🤖 AI Companion</button>
-                        <button onclick="showProfessionalHelp()">👨‍⚕️ Find Therapist</button>
-                        <button onclick="showEmergencyResources()">🆘 Crisis Support</button>
-                    </div>
-                    <div class="menu-category">
-                        <h3>🎨 Creative & Fun</h3>
-                        <button onclick="showVirtualPet()">🐕 Divine Pet</button>
-                        <button onclick="showArtTherapy()">🎨 Art Therapy</button>
-                        <button onclick="showMusicTherapy()">🎵 Music Healing</button>
-                        <button onclick="showWellnessGames()">🎮 Wellness Games</button>
-                    </div>
-                    <div class="menu-category">
-                        <h3>📚 Learn & Grow</h3>
-                        <button onclick="showEducationHub()">📖 Wellness Library</button>
-                        <button onclick="showAffirmation()">✨ Daily Wisdom</button>
-                        <button onclick="showCopingStrategies()">🛡️ Coping Arsenal</button>
-                        <button onclick="showSafetyPlanning()">🛡️ Safety Planning</button>
-                    </div>
-                    <div class="menu-category">
-                        <h3>🔧 Advanced Tools</h3>
-                        <button onclick="showHabitTracker()">📋 Habit Tracker</button>
-                        <button onclick="showCrisisIntervention()">🆘 Crisis Support</button>
-                        <button onclick="showPersonalizedDashboard()">🎯 Personal Dashboard</button>
-                    </div>
+            <h2>✨ Welcome to Apollo's Divine Sanctuary ✨</h2>
+            <div class="menu-grid">
+                <div class="menu-category">
+                    <h3>🧠 Mind & Mood</h3>
+                    <a href="mood-check.html">💭 Mood Oracle</a>
+                    <a href="thought-record.html">📝 Thought Record</a>
+                    <a href="anxiety-tracker.html">😰 Anxiety Tracker</a>
+                    <a href="cbt-workshop.html">🧠 CBT Workshop</a>
+                </div>
+                <div class="menu-category">
+                    <h3>🌱 Wellness & Care</h3>
+                    <a href="self-care.html">🌸 Self-Care Hub</a>
+                    <a href="breathing-exercise.html">🌬️ Sacred Breath</a>
+                    <a href="meditation-garden.html">🧘 Meditation Garden</a>
+                    <a href="sleep-tracker.html">😴 Sleep Sanctuary</a>
+                </div>
+                <div class="menu-category">
+                    <h3>📊 Tracking & Goals</h3>
+                    <a href="mood-tracker.html">📈 Mood Analytics</a>
+                    <a href="goal-setting.html">🎯 Wellness Goals</a>
+                    <a href="progress-dashboard.html">📊 Progress Hub</a>
+                    <a href="progress-dashboard.html">🔥 Wellness Streaks</a>
+                </div>
+                <div class="menu-category">
+                    <h3>🤝 Support & Community</h3>
+                    <a href="community-hub.html">👥 Community</a>
+                    <a href="ai-companion.html">🤖 AI Companion</a>
+                    <a href="professional-help.html">👨‍⚕️ Find Therapist</a>
+                    <a href="emergency-resources.html">🆘 Crisis Support</a>
+                </div>
+                <div class="menu-category">
+                    <h3>🎨 Creative & Fun</h3>
+                    <a href="virtual-pet.html">🐕 Divine Pet</a>
+                    <a href="art-therapy.html">🎨 Art Therapy</a>
+                    <a href="music-therapy.html">🎵 Music Healing</a>
+                    <a href="wellness-games.html">🎮 Wellness Games</a>
+                </div>
+                <div class="menu-category">
+                    <h3>📚 Learn & Grow</h3>
+                    <a href="education-hub.html">📖 Wellness Library</a>
+                    <a href="affirmation.html">✨ Daily Wisdom</a>
+                    <a href="coping-strategies.html">🛡️ Coping Arsenal</a>
+                    <a href="safety-planning.html">🛡️ Safety Planning</a>
+                </div>
+                <div class="menu-category">
+                    <h3>🔧 Advanced Tools</h3>
+                    <a href="habit-tracker.html">📋 Habit Tracker</a>
+                    <a href="crisis-intervention.html">🆘 Crisis Support</a>
+                    <a href="personalized-dashboard.html">🎯 Personal Dashboard</a>
                 </div>
             </div>
 
-            <div id="mood-check" class="section hidden">
-                <h2>💭 How are you feeling right now?</h2>
-                <p>Take a moment to check in with yourself. Your feelings are valid and important.</p>
-                <div class="mood-buttons">
-                    <button onclick="selectMood('anxiety')">😰 Anxious/Worried</button>
-                    <button onclick="selectMood('sadness')">😢 Sad/Down</button>
-                    <button onclick="selectMood('anger')">😠 Angry/Frustrated</button>
-                    <button onclick="selectMood('stress')">😵 Stressed/Overwhelmed</button>
-                    <button onclick="selectMood('lonely')">😔 Lonely/Isolated</button>
-                    <button onclick="selectMood('confused')">😕 Confused/Lost</button>
-                    <button onclick="selectMood('happy')">😊 Happy/Good</button>
-                    <button onclick="selectMood('excited')">😄 Excited/Energetic</button>
-                </div>
-                <div id="mood-intensity">
-                    <h3>How intense is this feeling? (1-10)</h3>
-                    <input type="range" id="intensity-slider" min="1" max="10" value="5" oninput="updateIntensity(this.value)">
-                    <span id="intensity-value">5</span>
-                </div>
-                <div id="mood-result"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="coping-strategies" class="section hidden">
-                <h2>🏺 Sacred Healing Arts of Apollo</h2>
-                <div class="strategy-buttons">
-                    <button onclick="showStrategies('anxiety')">Anxiety/Worry</button>
-                    <button onclick="showStrategies('sadness')">Sadness</button>
-                    <button onclick="showStrategies('anger')">Anger</button>
-                    <button onclick="showStrategies('stress')">Stress</button>
-                </div>
-                <div id="strategies-result"></div>
-                <button onclick="showMenu()" class="back-btn">← Return to Sacred Sanctuary</button>
-            </div>
 
-            <div id="affirmation" class="section hidden">
-                <h2>✨ Daily Inspiration & Affirmations</h2>
-                <div id="affirmation-text"></div>
-                <div class="affirmation-controls">
-                    <button onclick="getNewAffirmation()">New Affirmation</button>
-                    <button onclick="saveAffirmation()">Save This One</button>
-                    <button onclick="shareAffirmation()">Share</button>
-                </div>
-                <div id="saved-affirmations">
-                    <h3>Your Saved Affirmations</h3>
-                    <div id="saved-list"></div>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="mood-tracker" class="section hidden">
-                <h2>📊 Chronicle of Your Soul's Journey</h2>
-                <div id="mood-log"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="self-care" class="section hidden">
-                <h2>🌱 Self-Care Activities</h2>
-                <p>Choose an activity that feels right for you today:</p>
-                <div class="self-care-grid">
-                    <button onclick="startActivity('gratitude')">Gratitude Practice</button>
-                    <button onclick="startActivity('mindfulness')">5-Minute Mindfulness</button>
-                    <button onclick="startActivity('movement')">Gentle Movement</button>
-                    <button onclick="startActivity('creativity')">Creative Expression</button>
-                    <button onclick="startActivity('nature')">Nature Connection</button>
-                    <button onclick="startActivity('music')">Music Therapy</button>
-                </div>
-                <div id="activity-content"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="goal-setting" class="section hidden">
-                <h2>🎯 Wellness Goals</h2>
-                <p>Set small, achievable goals for your mental health journey:</p>
-                <div class="goal-form">
-                    <input type="text" id="goal-input" placeholder="What's one small thing you'd like to work on?">
-                    <select id="goal-timeframe">
-                        <option value="today">Today</option>
-                        <option value="week">This Week</option>
-                        <option value="month">This Month</option>
-                    </select>
-                    <button onclick="addGoal()">Add Goal</button>
-                </div>
-                <div id="goals-list"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="progress-dashboard" class="section hidden">
-                <h2>📊 Divine Progress Dashboard</h2>
-                <div class="dashboard-grid">
-                    <div class="progress-card">
-                        <h3>This Week</h3>
-                        <div class="progress-stats">
-                            <div class="stat">Check-ins: <span id="weekly-checkins">0</span></div>
-                            <div class="stat">Avg Mood: <span id="weekly-mood">0</span></div>
-                            <div class="stat">Goals Met: <span id="weekly-goals">0</span></div>
-                        </div>
-                    </div>
-                    <div class="progress-card">
-                        <h3>Wellness Streak</h3>
-                        <div class="streak-display">
-                            <div class="streak-number" id="current-streak">0</div>
-                            <div class="streak-label">days</div>
-                        </div>
-                    </div>
-                    <div class="progress-card">
-                        <h3>Achievements</h3>
-                        <div id="achievements-list"></div>
-                    </div>
-                </div>
-                <div class="progress-charts">
-                    <canvas id="mood-chart" width="400" height="200"></canvas>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="emergency-resources" class="section hidden">
-                <h2>🆘 Get Help Now</h2>
-                <div class="emergency-content">
-                    <div class="urgent">
-                        <h3>If you're having thoughts of hurting yourself or others:</h3>
-                        <ul>
-                            <li><strong>Call 988</strong> (Suicide & Crisis Lifeline) - Available 24/7</li>
-                            <li><strong>Text 'HELLO' to 741741</strong> (Crisis Text Line)</li>
-                            <li><strong>Call 911</strong> for immediate emergency</li>
-                        </ul>
-                    </div>
-                    <div class="other-resources">
-                        <h3>Other helpful resources:</h3>
-                        <ul>
-                            <li>Teen Line: 1-800-852-8336 (6-10 PM PST)</li>
-                            <li>National Child Abuse Hotline: 1-800-4-A-CHILD</li>
-                            <li>LGBTQ National Hotline: 1-888-843-4564</li>
-                        </ul>
-                    </div>
-                    <p class="reminder">💙 Remember: Asking for help is a sign of strength, not weakness!</p>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- New Advanced Sections -->
-            <div id="thought-record" class="section hidden">
-                <h2>📝 Divine Thought Record</h2>
-                <div class="thought-form">
-                    <div class="form-group">
-                        <label>Situation:</label>
-                        <textarea id="situation" placeholder="What happened?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Automatic Thought:</label>
-                        <textarea id="thought" placeholder="What went through your mind?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Emotion & Intensity (1-10):</label>
-                        <input type="text" id="emotion" placeholder="e.g., Anxious (8)">
-                    </div>
-                    <div class="form-group">
-                        <label>Evidence For:</label>
-                        <textarea id="evidence-for" placeholder="What supports this thought?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Evidence Against:</label>
-                        <textarea id="evidence-against" placeholder="What contradicts this thought?"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>Balanced Thought:</label>
-                        <textarea id="balanced-thought" placeholder="What's a more balanced perspective?"></textarea>
-                    </div>
-                    <button onclick="saveThoughtRecord()">Save Record</button>
-                </div>
-                <div id="thought-history"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="anxiety-tracker" class="section hidden">
-                <h2>😰 Anxiety Tracker</h2>
-                <div class="anxiety-form">
-                    <div class="form-group">
-                        <label>Anxiety Level (1-10):</label>
-                        <input type="range" id="anxiety-level" min="1" max="10" value="5">
-                        <span id="anxiety-value">5</span>
-                    </div>
-                    <div class="form-group">
-                        <label>Triggers:</label>
-                        <div class="trigger-buttons">
-                            <button onclick="toggleTrigger('work')">Work</button>
-                            <button onclick="toggleTrigger('social')">Social</button>
-                            <button onclick="toggleTrigger('health')">Health</button>
-                            <button onclick="toggleTrigger('family')">Family</button>
-                            <button onclick="toggleTrigger('money')">Money</button>
-                            <button onclick="toggleTrigger('other')">Other</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Physical Symptoms:</label>
-                        <div class="symptom-grid">
-                            <label><input type="checkbox" value="racing-heart"> Racing Heart</label>
-                            <label><input type="checkbox" value="sweating"> Sweating</label>
-                            <label><input type="checkbox" value="shaking"> Shaking</label>
-                            <label><input type="checkbox" value="nausea"> Nausea</label>
-                            <label><input type="checkbox" value="dizziness"> Dizziness</label>
-                            <label><input type="checkbox" value="breathing"> Trouble Breathing</label>
-                        </div>
-                    </div>
-                    <button onclick="saveAnxietyRecord()">Log Anxiety</button>
-                </div>
-                <div id="anxiety-insights"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="virtual-pet" class="section hidden">
-                <h2>🐕 Your Divine Companion</h2>
-                <div class="pet-container">
-                    <div class="pet-display">
-                        <div id="pet-avatar">🐶</div>
-                        <div id="pet-name">Apollo Jr.</div>
-                        <div id="pet-level">Level 0</div>
-                        <div class="pet-stats">
-                            <div class="stat-bar">
-                                <label>Happiness:</label>
-                                <div class="bar"><div id="happiness-bar" class="fill"></div></div>
-                            </div>
-                            <div class="stat-bar">
-                                <label>Health:</label>
-                                <div class="bar"><div id="health-bar" class="fill"></div></div>
-                            </div>
-                            <div class="stat-bar">
-                                <label>Energy:</label>
-                                <div class="bar"><div id="energy-bar" class="fill"></div></div>
-                            </div>
-                            <div class="pet-currency">
-                                <span>🪙 Coins: <span id="pet-coins">20</span></span>
-                                <span>✨ XP: <span id="pet-xp">0</span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pet-actions">
-                        <button onclick="feedPet()">🍖 Feed</button>
-                        <button onclick="playWithPet()">🎾 Play</button>
-                        <button onclick="petCare()">💕 Care</button>
-                        <button onclick="petWalk()">🚶 Walk</button>
-                        <button onclick="trainPet()">🎓 Train</button>
-                        <button onclick="petMeditate()">🧘 Meditate</button>
-                        <button onclick="giveTreat()">🍪 Treat</button>
-                        <button onclick="earnCoins()">🪙 Daily Coins</button>
-                    </div>
-                    <div id="pet-messages"></div>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="meditation-garden" class="section hidden">
-                <h2>🧘 Sacred Meditation Garden</h2>
-                <div class="garden-container">
-                    <div class="meditation-scene">
-                        <div class="scene-elements">
-                            <div class="tree">🌳</div>
-                            <div class="flowers">🌸🌼🌺</div>
-                            <div class="water">🌊</div>
-                        </div>
-                    </div>
-                    <div class="meditation-controls">
-                        <button onclick="startMeditation('mindfulness')">Mindfulness (5 min)</button>
-                        <button onclick="startMeditation('body-scan')">Body Scan (10 min)</button>
-                        <button onclick="startMeditation('loving-kindness')">Loving Kindness (7 min)</button>
-                        <button onclick="startMeditation('anxiety-relief')">Anxiety Relief (8 min)</button>
-                    </div>
-                    <div id="meditation-player" class="hidden">
-                        <div id="meditation-timer">00:00</div>
-                        <div id="meditation-instructions"></div>
-                        <button id="meditation-pause" onclick="pauseMeditation()">Pause</button>
-                        <button onclick="stopMeditation()">Stop</button>
-                    </div>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="ai-companion" class="section hidden">
-                <h2>🤖 Apollo's AI Companion</h2>
-                <div class="chat-container">
-                    <div id="chat-messages" class="chat-messages">
-                        <div class="ai-message">Hello! I'm here to support you 24/7. How are you feeling today?</div>
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" id="user-input" placeholder="Type your message..." onkeypress="handleChatEnter(event)">
-                        <button onclick="sendMessage()">💬 Send</button>
-                    </div>
-                    <div class="quick-responses">
-                        <button onclick="quickResponse('anxious')">😰 Anxious</button>
-                        <button onclick="quickResponse('sad')">😢 Sad</button>
-                        <button onclick="quickResponse('stressed')">😵 Stressed</button>
-                        <button onclick="quickResponse('help')">🆘 Need Help</button>
-                        <button onclick="quickResponse('grateful')">🙏 Grateful</button>
-                        <button onclick="quickResponse('excited')">😄 Excited</button>
-                        <button onclick="quickResponse('lonely')">😔 Lonely</button>
-                        <button onclick="quickResponse('confused')">😕 Confused</button>
-                    </div>
-                    <div class="companion-tools">
-                        <button onclick="offerGuidedExercise('breathing')">🌬️ Sacred Breathing</button>
-                        <button onclick="offerGuidedExercise('grounding')">🌍 Grounding Ritual</button>
-                        <button onclick="offerGuidedExercise('affirmation')">✨ Divine Affirmations</button>
-                        <button onclick="shareWisdom()">🦉 Apollo's Wisdom</button>
-                        <button onclick="checkIn()">💫 Soul Check-in</button>
-                    </div>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="breathing-exercise" class="section hidden">
-                <h2>🌬️ Sacred Breathing Rituals</h2>
-                <div id="breathing-content">
-                    <p>Choose a divine breathing technique:</p>
-                    <div class="breathing-options">
-                        <button onclick="setBreathingType('basic')">Basic Deep Breathing</button>
-                        <button onclick="setBreathingType('box')">Box Breathing (4-4-4-4)</button>
-                        <button onclick="setBreathingType('calm')">Calming Breath (4-7-8)</button>
-                        <button onclick="setBreathingType('energizing')">Energizing Breath</button>
-                        <button onclick="setBreathingType('sleep')">Sleep Preparation</button>
-                    </div>
-                    <div id="breathing-circle"></div>
-                    <div id="breathing-instructions">Choose a technique above to begin</div>
-                    <button id="breathing-btn" onclick="startBreathing()" disabled>Start Exercise</button>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
-            <div id="sleep-tracker" class="section hidden">
-                <h2>😴 Sleep Sanctuary</h2>
-                <div class="sleep-form">
-                    <div class="form-group">
-                        <label>Bedtime:</label>
-                        <input type="time" id="bedtime">
-                    </div>
-                    <div class="form-group">
-                        <label>Wake Time:</label>
-                        <input type="time" id="waketime">
-                    </div>
-                    <div class="form-group">
-                        <label>Sleep Quality (1-10):</label>
-                        <input type="range" id="sleep-quality" min="1" max="10" value="5">
-                        <span id="sleep-quality-value">5</span>
-                    </div>
-                    <div class="form-group">
-                        <label>How do you feel?</label>
-                        <select id="morning-mood">
-                            <option value="refreshed">Refreshed</option>
-                            <option value="tired">Tired</option>
-                            <option value="groggy">Groggy</option>
-                            <option value="energetic">Energetic</option>
-                        </select>
-                    </div>
-                    <button onclick="logSleep()">Log Sleep</button>
-                </div>
-                <div id="sleep-insights"></div>
-                <div class="sleep-tips">
-                    <h3>Sleep Improvement Tips:</h3>
-                    <ul>
-                        <li>Keep a consistent sleep schedule</li>
-                        <li>Create a relaxing bedtime routine</li>
-                        <li>Limit screen time before bed</li>
-                        <li>Keep your bedroom cool and dark</li>
-                    </ul>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="safety-planning" class="section hidden">
-                <h2>🛡️ Divine Safety Plan</h2>
-                <div class="safety-form">
-                    <div class="form-section">
-                        <h3>Warning Signs:</h3>
-                        <textarea id="warning-signs" placeholder="What are your personal warning signs?"></textarea>
-                    </div>
-                    <div class="form-section">
-                        <h3>Coping Strategies:</h3>
-                        <textarea id="coping-strategies-plan" placeholder="What helps you cope?"></textarea>
-                    </div>
-                    <div class="form-section">
-                        <h3>Support Contacts:</h3>
-                        <input type="text" id="support-contact-1" placeholder="Name and phone number">
-                        <input type="text" id="support-contact-2" placeholder="Name and phone number">
-                        <input type="text" id="support-contact-3" placeholder="Name and phone number">
-                    </div>
-                    <div class="form-section">
-                        <h3>Professional Contacts:</h3>
-                        <input type="text" id="therapist-contact" placeholder="Therapist contact">
-                        <input type="text" id="doctor-contact" placeholder="Doctor contact">
-                    </div>
-                    <div class="form-section">
-                        <h3>Safe Environment:</h3>
-                        <textarea id="safe-environment" placeholder="How to make your environment safer?"></textarea>
-                    </div>
-                    <button onclick="saveSafetyPlan()">Save Safety Plan</button>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <div id="wellness-games" class="section hidden">
-                <h2>🎮 Divine Wellness Games</h2>
-                <div class="games-grid">
-                    <div class="game-card">
-                        <div class="game-icon">🧠</div>
-                        <h3>Memory Palace</h3>
-                        <p>Strengthen your mind with memory games</p>
-                        <button onclick="playGame('memory')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('memory')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">🧩</div>
-                        <h3>Zen Puzzles</h3>
-                        <p>Relax with calming puzzle games</p>
-                        <button onclick="playGame('puzzle')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('puzzle')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">🌬️</div>
-                        <h3>Breath Master</h3>
-                        <p>Gamified breathing exercises</p>
-                        <button onclick="playGame('breathing-game')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('breathing-game')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">👾</div>
-                        <h3>Mood Monsters</h3>
-                        <p>Battle negative thoughts</p>
-                        <button onclick="playGame('mood-monster')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('mood-monster')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">📝</div>
-                        <h3>Word Calm</h3>
-                        <p>Find peaceful words in the grid</p>
-                        <button onclick="playGame('word-calm')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('word-calm')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">🎨</div>
-                        <h3>Color Therapy</h3>
-                        <p>Match colors to heal your mood</p>
-                        <button onclick="playGame('color-therapy')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('color-therapy')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">🌱</div>
-                        <h3>Gratitude Garden</h3>
-                        <p>Grow flowers with positive thoughts</p>
-                        <button onclick="playGame('gratitude-garden')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('gratitude-garden')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">🪨</div>
-                        <h3>Zen Stones</h3>
-                        <p>Balance stones for inner peace</p>
-                        <button onclick="playGame('zen-stones')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('zen-stones')">ℹ️ Help</button>
-                    </div>
-                    <div class="game-card">
-                        <div class="game-icon">🔮</div>
-                        <h3>Mindful Matching</h3>
-                        <p>Match emotions with coping strategies</p>
-                        <button onclick="playGame('mindful-matching')">Play Game</button>
-                        <button class="game-help-btn" onclick="showGameHelp('mindful-matching')">ℹ️ Help</button>
-                    </div>
-                </div>
-                <div id="game-area"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- CBT Workshop Section -->
-            <div id="cbt-workshop" class="section hidden">
-                <h2>🧠 CBT Workshop</h2>
-                <p>Learn and practice Cognitive Behavioral Therapy techniques</p>
-                <div class="cbt-exercises">
-                    <button onclick="startCBTExercise('thought-challenging')">🧠 Thought Challenging</button>
-                    <button onclick="startCBTExercise('behavioral-activation')">🎯 Behavioral Activation</button>
-                    <button onclick="startCBTExercise('mindfulness-cbt')">🧘 Mindful Awareness</button>
-                </div>
-                <div id="cbt-content"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Community Hub Section -->
-            <div id="community-hub" class="section hidden">
-                <h2>👥 Community Hub</h2>
-                <p>Connect with others on their healing journey</p>
-                <div id="community-content"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Professional Help Section -->
-            <div id="professional-help" class="section hidden">
-                <h2>👨‍⚕️ Find Professional Help</h2>
-                <p>Connect with qualified mental health professionals</p>
-                <div class="help-finder">
-                    <div class="search-filters">
-                        <input type="text" placeholder="Enter your location" id="location-input">
-                        <select id="specialty-filter">
-                            <option value="all">All Specialties</option>
-                            <option value="anxiety">Anxiety Disorders</option>
-                            <option value="depression">Depression</option>
-                            <option value="trauma">Trauma & PTSD</option>
-                            <option value="relationships">Relationships</option>
-                        </select>
-                        <button onclick="findTherapists()">🔍 Find Therapists</button>
-                    </div>
-                    <div id="therapist-results"></div>
-                </div>
-                <div class="help-resources">
-                    <h3>Additional Resources:</h3>
-                    <ul>
-                        <li>Psychology Today Therapist Directory</li>
-                        <li>Your insurance provider's network</li>
-                        <li>Community mental health centers</li>
-                        <li>University counseling centers</li>
-                    </ul>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Art Therapy Section -->
-            <div id="art-therapy" class="section hidden">
-                <h2>🎨 Art Therapy Studio</h2>
-                <p>Express yourself through healing art</p>
-                <div class="art-studio">
-                    <div class="art-tools">
-                        <label>Color: <input type="color" id="color-picker" value="#000000"></label>
-                        <button onclick="clearCanvas()">🗑️ Clear</button>
-                        <button onclick="saveArtwork()">💾 Save</button>
-                    </div>
-                    <canvas id="art-canvas" width="600" height="400"></canvas>
-                    <div class="art-prompts">
-                        <h3>Healing Art Prompts:</h3>
-                        <ul>
-                            <li>Draw how you're feeling right now</li>
-                            <li>Create your safe space</li>
-                            <li>Illustrate your hopes and dreams</li>
-                            <li>Express gratitude through colors</li>
-                        </ul>
-                    </div>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Music Therapy Section -->
-            <div id="music-therapy" class="section hidden">
-                <h2>🎵 Music Therapy Center</h2>
-                <p>Heal through the power of sound and music</p>
-                <div class="music-options">
-                    <button onclick="playMusicTherapy('nature')">🌿 Nature Sounds</button>
-                    <button onclick="playMusicTherapy('binaural')">🧠 Binaural Beats</button>
-                    <button onclick="playMusicTherapy('classical')">🎼 Classical Therapy</button>
-                    <button onclick="playMusicTherapy('ambient')">🌌 Ambient Healing</button>
-                </div>
-                <div id="music-player"></div>
-                <div id="music-info"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Education Hub Section -->
-            <div id="education-hub" class="section hidden">
-                <h2>📚 Wellness Education Hub</h2>
-                <p>Learn about mental health and wellness</p>
-                <div id="education-content"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Habit Tracker Section -->
-            <div id="habit-tracker" class="section hidden">
-                <h2>📋 Habit Tracker</h2>
-                <p>Build positive habits for lasting wellness</p>
-                <div class="habit-form">
-                    <input type="text" id="habit-input" placeholder="Enter a new wellness habit...">
-                    <button onclick="addHabit()">➕ Add Habit</button>
-                </div>
-                <div id="habits-list"></div>
-                <div class="habit-suggestions">
-                    <h3>💡 Habit Ideas:</h3>
-                    <div class="suggestion-tags">
-                        <span onclick="document.getElementById('habit-input').value='Daily meditation'">🧘 Daily meditation</span>
-                        <span onclick="document.getElementById('habit-input').value='Gratitude journaling'">📝 Gratitude journaling</span>
-                        <span onclick="document.getElementById('habit-input').value='Morning walk'">🚶 Morning walk</span>
-                        <span onclick="document.getElementById('habit-input').value='Deep breathing'">🌬️ Deep breathing</span>
-                        <span onclick="document.getElementById('habit-input').value='Drink water'">💧 Drink water</span>
-                    </div>
-                </div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Crisis Intervention Section -->
-            <div id="crisis-intervention" class="section hidden">
-                <h2>🆘 Crisis Support System</h2>
-                <p>Immediate support when you need it most</p>
-                <div id="crisis-assessment"></div>
-                <div id="crisis-response"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
 
-            <!-- Personalized Dashboard Section -->
-            <div id="personalized-dashboard" class="section hidden">
-                <h2>🎯 Your Personal Wellness Dashboard</h2>
-                <p>Tailored recommendations based on your journey</p>
-                <div id="dashboard-content"></div>
-                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
-            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         </main>
     </div>
