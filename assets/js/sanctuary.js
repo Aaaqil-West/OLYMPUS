@@ -309,6 +309,16 @@ function initializeCurrentPage() {
                 playerSequence = [];
                 gardenFlowers = 0;
                 stoneBalance = 0;
+                wavePosition = 0;
+                boatPosition = 50;
+                waveScore = 0;
+                waveGameActive = false;
+                stars = [];
+                clouds = [];
+                starScore = 0;
+                starGameActive = false;
+                worries = [];
+                butterflies = [];
                 document.getElementById('game-area').innerHTML = '';
             }
             break;
@@ -1321,6 +1331,21 @@ const gameDescriptions = {
         title: '🔮 Mindful Matching',
         description: 'Match emotions with their corresponding healthy coping strategies.',
         benefits: 'Reinforces emotional awareness, teaches coping skills, builds mental health knowledge'
+    },
+    'ocean-waves': {
+        title: '🌊 Ocean Waves',
+        description: 'Guide a boat through calming waves by timing your clicks with the rhythm.',
+        benefits: 'Promotes relaxation, improves timing and focus, creates meditative state'
+    },
+    'star-collector': {
+        title: '⭐ Star Collector',
+        description: 'Collect positive thought stars while avoiding negative thought clouds.',
+        benefits: 'Reinforces positive thinking, improves reaction time, builds optimism'
+    },
+    'butterfly-garden': {
+        title: '🦋 Butterfly Garden',
+        description: 'Transform written worries into beautiful butterflies that fly away.',
+        benefits: 'Processes anxiety, promotes letting go, creates positive transformation mindset'
     }
 };
 
@@ -1354,6 +1379,15 @@ function playGame(gameType) {
             break;
         case 'mindful-matching':
             startMindfulMatching(gameArea);
+            break;
+        case 'ocean-waves':
+            startOceanWaves(gameArea);
+            break;
+        case 'star-collector':
+            startStarCollector(gameArea);
+            break;
+        case 'butterfly-garden':
+            startButterflyGarden(gameArea);
             break;
     }
 }
@@ -1862,6 +1896,18 @@ function updateStones() {
 let matchingPairs = [];
 let selectedCards = [];
 let matchingScore = 0;
+
+// New game variables
+let wavePosition = 0;
+let boatPosition = 50;
+let waveScore = 0;
+let waveGameActive = false;
+let stars = [];
+let clouds = [];
+let starScore = 0;
+let starGameActive = false;
+let worries = [];
+let butterflies = [];
 
 function startMindfulMatching(gameArea) {
     const emotions = ['😰 Anxiety', '😢 Sadness', '😡 Anger', '😵 Stress'];

@@ -1,0 +1,150 @@
+/* New Wellness Games Styles */
+
+/* Ocean Waves Game */
+.ocean-waves-game {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(42,42,42,0.7));
+    border-radius: 20px;
+    border: 2px solid rgba(255,179,71,0.3);
+    margin-top: 2rem;
+}
+
+.ocean-container {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #1e40af, #3b82f6);
+    border-radius: 15px;
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.boat {
+    position: absolute;
+    bottom: 20px;
+    font-size: 2rem;
+    transition: left 0.3s ease;
+    z-index: 2;
+}
+
+.wave {
+    position: absolute;
+    bottom: 0;
+    font-size: 3rem;
+    animation: waveFloat 2s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes waveFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Star Collector Game */
+.star-collector-game {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(42,42,42,0.7));
+    border-radius: 20px;
+    border: 2px solid rgba(255,179,71,0.3);
+    margin-top: 2rem;
+}
+
+.star-field {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    border-radius: 15px;
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.star-item, .cloud-item {
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.star-item:hover {
+    transform: scale(1.2);
+    filter: brightness(1.5);
+}
+
+.cloud-item:hover {
+    transform: scale(1.1);
+    filter: brightness(0.8);
+}
+
+/* Butterfly Garden Game */
+.butterfly-garden-game {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(26,26,26,0.9), rgba(42,42,42,0.7));
+    border-radius: 20px;
+    border: 2px solid rgba(255,179,71,0.3);
+    margin-top: 2rem;
+}
+
+.worry-input {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.worry-input input {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.butterfly-field {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-radius: 15px;
+    margin: 2rem 0;
+    overflow: hidden;
+}
+
+.butterfly {
+    position: absolute;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    animation: butterflyFloat 3s ease-in-out infinite;
+}
+
+@keyframes butterflyFloat {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+.butterfly:hover {
+    transform: scale(1.2);
+    filter: brightness(1.2);
+}
+
+/* Responsive styles for new games */
+@media (max-width: 768px) {
+    .ocean-container, .star-field, .butterfly-field {
+        height: 200px;
+    }
+    
+    .worry-input {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .worry-input input {
+        width: 100%;
+        max-width: 300px;
+    }
+}
