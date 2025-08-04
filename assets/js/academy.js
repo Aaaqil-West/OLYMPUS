@@ -811,6 +811,15 @@ window.startStudy = function(type) {
     window.studyStartTime = Date.now();
     window.currentStudyMethod = type;
     
+    // Stop any ongoing audio
+    if (window.currentAudio) {
+        window.currentAudio.pause();
+        window.currentAudio = null;
+    }
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+    }
+    
     document.getElementById('dashboard').style.display = 'none';
     document.getElementById('studyInterface').style.display = 'block';
     
@@ -840,6 +849,9 @@ window.startStudy = function(type) {
             break;
         case 'treasure':
             loadTreasureHunt(content);
+            break;
+        case 'audio':
+            loadAudioStudy(content);
             break;
         default:
             content.innerHTML = `<h2>🎮 ${type} Study Method</h2><p>Divine learning experience for ${getSubject().name}</p>`;
@@ -1043,6 +1055,496 @@ function loadTreasureHunt(container) {
             </div>
         </div>
     `;
+}
+
+function loadAudioStudy(container) {
+    const chapterData = getChapter();
+    const subject = getSubject();
+    
+    container.innerHTML = `
+        <div>
+            <h2 style="color: #cd853f; text-align: center; margin-bottom: 2rem;">🎧 Divine Audio Oracle - ${subject.name}</h2>
+            
+            <!-- Audio Study Mode Selector -->
+            <div style="background: #333; border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem;">
+                <h3 style="color: #cd853f; margin-bottom: 1rem;">🎵 Choose Your Audio Experience</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <button onclick="startTextToSpeech()" style="background: linear-gradient(45deg, #4a90e2, #357abd); color: #fff; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗣️</div>
+                        <div style="font-weight: bold;">Text-to-Speech</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Listen to content</div>
+                    </button>
+                    <button onclick="startAudioNotes()" style="background: linear-gradient(45deg, #e74c3c, #c0392b); color: #fff; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎙️</div>
+                        <div style="font-weight: bold;">Audio Notes</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Record & playback</div>
+                    </button>
+                    <button onclick="startListeningQuiz()" style="background: linear-gradient(45deg, #27ae60, #229954); color: #fff; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👂</div>
+                        <div style="font-weight: bold;">Listening Quiz</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Audio comprehension</div>
+                    </button>
+                    <button onclick="startAudioFlashcards()" style="background: linear-gradient(45deg, #9b59b6, #8e44ad); color: #fff; border: none; padding: 1rem; border-radius: 8px; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔊</div>
+                        <div style="font-weight: bold;">Audio Cards</div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Spoken flashcards</div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Audio Content Area -->
+            <div id="audioContentArea" style="background: #222; border: 2px solid #00bfff; border-radius: 12px; padding: 2rem; min-height: 300px;">
+                <div style="text-align: center; color: #999; padding: 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎧</div>
+                    <p>Select an audio study method above to begin your divine auditory learning journey</p>
+                </div>
+            </div>
+            
+            <!-- Audio Controls -->
+            <div id="audioControls" style="background: #333; border-radius: 8px; padding: 1rem; margin-top: 1rem; display: none;">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+                    <button id="playPauseBtn" onclick="toggleAudioPlayback()" style="background: #28a745; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">▶️ Play</button>
+                    <button onclick="stopAudio()" style="background: #dc3545; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">⏹️ Stop</button>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #ccc;">Speed:</span>
+                        <select id="speedControl" onchange="changePlaybackSpeed()" style="background: #222; color: #fff; border: 1px solid #555; padding: 0.5rem; border-radius: 4px;">
+                            <option value="0.5">0.5x</option>
+                            <option value="0.75">0.75x</option>
+                            <option value="1" selected>1x</option>
+                            <option value="1.25">1.25x</option>
+                            <option value="1.5">1.5x</option>
+                            <option value="2">2x</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: #ccc;">Volume:</span>
+                        <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.8" onchange="changeVolume()" style="width: 100px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Initialize audio study variables
+    window.currentAudio = null;
+    window.audioRecorder = null;
+    window.audioChunks = [];
+    window.isRecording = false;
+    window.currentAudioMode = null;
+}
+
+// Audio Study Functions
+window.startTextToSpeech = function() {
+    const contentArea = document.getElementById('audioContentArea');
+    const chapterData = getChapter();
+    const subject = getSubject();
+    
+    contentArea.innerHTML = `
+        <div>
+            <h3 style="color: #cd853f; margin-bottom: 1rem;">🗣️ Divine Voice Reading - ${playerState.chapter}</h3>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem;">
+                <p style="line-height: 1.8; font-size: 1.1rem; color: #ddd;" id="textToRead">${chapterData.content}</p>
+            </div>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
+                <button onclick="speakText()" style="background: #28a745; color: #fff; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-weight: bold;">🔊 Speak Text</button>
+                <button onclick="pauseSpeech()" style="background: #ffc107; color: #000; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-weight: bold;">⏸️ Pause</button>
+                <button onclick="stopSpeech()" style="background: #dc3545; color: #fff; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-weight: bold;">⏹️ Stop</button>
+            </div>
+            <div style="background: rgba(205, 133, 63, 0.1); border-radius: 8px; padding: 1rem;">
+                <h4 style="color: #cd853f; margin-bottom: 0.5rem;">🎛️ Voice Settings</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div>
+                        <label style="color: #ccc; display: block; margin-bottom: 0.5rem;">Voice:</label>
+                        <select id="voiceSelect" style="background: #222; color: #fff; border: 1px solid #555; padding: 0.5rem; border-radius: 4px; width: 100%;">
+                            <option value="0">Default Voice</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="color: #ccc; display: block; margin-bottom: 0.5rem;">Rate: <span id="rateValue">1</span></label>
+                        <input type="range" id="rateControl" min="0.1" max="2" step="0.1" value="1" onchange="updateRate()" style="width: 100%;">
+                    </div>
+                    <div>
+                        <label style="color: #ccc; display: block; margin-bottom: 0.5rem;">Pitch: <span id="pitchValue">1</span></label>
+                        <input type="range" id="pitchControl" min="0" max="2" step="0.1" value="1" onchange="updatePitch()" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    // Populate voice options
+    populateVoices();
+    window.currentAudioMode = 'tts';
+};
+
+window.startAudioNotes = function() {
+    const contentArea = document.getElementById('audioContentArea');
+    
+    contentArea.innerHTML = `
+        <div>
+            <h3 style="color: #cd853f; margin-bottom: 1rem;">🎙️ Divine Audio Scrolls - Record Your Wisdom</h3>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 2rem; text-align: center; margin-bottom: 1rem;">
+                <div id="recordingStatus" style="font-size: 3rem; margin-bottom: 1rem;">🎙️</div>
+                <div id="recordingText" style="color: #ccc; font-size: 1.2rem; margin-bottom: 2rem;">Ready to record your divine insights</div>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
+                    <button id="recordBtn" onclick="startRecording()" style="background: #dc3545; color: #fff; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-weight: bold;">🔴 Start Recording</button>
+                    <button id="stopRecordBtn" onclick="stopRecording()" disabled style="background: #666; color: #999; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: not-allowed; font-weight: bold;">⏹️ Stop Recording</button>
+                </div>
+                <div id="recordingTimer" style="color: #00bfff; font-size: 1.5rem; font-weight: bold;">00:00</div>
+            </div>
+            <div id="audioNotesList" style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1rem;">
+                <h4 style="color: #cd853f; margin-bottom: 1rem;">📚 Your Audio Scrolls</h4>
+                <div id="savedNotes" style="color: #999; text-align: center; padding: 2rem;">No audio notes recorded yet. Start recording to create your first divine scroll!</div>
+            </div>
+        </div>
+    `;
+    
+    window.currentAudioMode = 'notes';
+    loadSavedAudioNotes();
+};
+
+window.startListeningQuiz = function() {
+    const contentArea = document.getElementById('audioContentArea');
+    const chapterData = getChapter();
+    const quiz = chapterData.quiz;
+    
+    contentArea.innerHTML = `
+        <div>
+            <h3 style="color: #cd853f; margin-bottom: 1rem;">👂 Divine Listening Trial</h3>
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 2rem; text-align: center; margin-bottom: 1rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔊</div>
+                <p style="color: #ccc; margin-bottom: 2rem;">Listen carefully to the question, then select your answer</p>
+                <button onclick="playQuizQuestion()" style="background: #00bfff; color: #000; border: none; padding: 1rem 2rem; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 2rem;">🎧 Play Question</button>
+                <div id="quizQuestion" style="display: none;">
+                    <p style="font-size: 1.1rem; margin: 1.5rem 0; color: #fff;">${quiz[0].question}</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;">
+                        ${quiz[0].options.map((option, index) => 
+                            `<button onclick="selectAudioAnswer(${index}, ${quiz[0].correct})" style="background: #333; color: #fff; border: 2px solid #555; padding: 1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.borderColor='#00bfff'" onmouseout="this.style.borderColor='#555'">${option}</button>`
+                        ).join('')}
+                    </div>
+                </div>
+            </div>
+            <div id="audioQuizResult" style="display: none; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1rem;">
+                <p style="color: #ddd;">${quiz[0].explanation}</p>
+            </div>
+        </div>
+    `;
+    
+    window.currentAudioMode = 'quiz';
+    window.currentQuizQuestion = quiz[0];
+};
+
+window.startAudioFlashcards = function() {
+    const contentArea = document.getElementById('audioContentArea');
+    const chapterData = getChapter();
+    const flashcards = chapterData.flashcards;
+    
+    contentArea.innerHTML = `
+        <div>
+            <h3 style="color: #cd853f; margin-bottom: 1rem;">🔊 Divine Audio Scrolls</h3>
+            <div style="text-align: center;">
+                <div style="background: #222; border: 2px solid #00bfff; border-radius: 12px; padding: 3rem; margin: 2rem auto; max-width: 500px; min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <div style="font-size: 1.2rem; text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 1rem;">🔊</div>
+                        <div id="audioCardContent">${flashcards[0].front}</div>
+                        <div style="margin-top: 2rem;">
+                            <button onclick="speakFlashcard('front')" style="background: #28a745; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; margin: 0.5rem;">🗣️ Speak Front</button>
+                            <button onclick="speakFlashcard('back')" style="background: #17a2b8; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer; margin: 0.5rem;">🗣️ Speak Back</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin: 1rem 0; color: #ccc;">Audio Card <span id="cardNumber">1</span> of ${flashcards.length}</div>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button onclick="previousAudioCard()" style="background: #6c757d; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">⬅️ Previous</button>
+                    <button onclick="nextAudioCard()" style="background: #007bff; color: #fff; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">Next ➡️</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    window.currentAudioMode = 'flashcards';
+    window.currentCardIndex = 0;
+    window.audioFlashcards = flashcards;
+};
+
+// Text-to-Speech Functions
+function populateVoices() {
+    const voiceSelect = document.getElementById('voiceSelect');
+    if (!voiceSelect) return;
+    
+    const voices = speechSynthesis.getVoices();
+    voiceSelect.innerHTML = voices.map((voice, index) => 
+        `<option value="${index}">${voice.name} (${voice.lang})</option>`
+    ).join('');
+}
+
+window.speakText = function() {
+    const text = document.getElementById('textToRead').textContent;
+    const voiceSelect = document.getElementById('voiceSelect');
+    const rateControl = document.getElementById('rateControl');
+    const pitchControl = document.getElementById('pitchControl');
+    
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        
+        if (voiceSelect) {
+            const voices = speechSynthesis.getVoices();
+            utterance.voice = voices[voiceSelect.value] || voices[0];
+        }
+        
+        if (rateControl) utterance.rate = parseFloat(rateControl.value);
+        if (pitchControl) utterance.pitch = parseFloat(pitchControl.value);
+        
+        utterance.onstart = () => showNotification('🗣️ Divine voice speaking...');
+        utterance.onend = () => showNotification('✅ Reading complete!');
+        
+        speechSynthesis.speak(utterance);
+    } else {
+        showNotification('❌ Text-to-speech not supported in this browser');
+    }
+};
+
+window.pauseSpeech = function() {
+    if (speechSynthesis.speaking) {
+        speechSynthesis.pause();
+        showNotification('⏸️ Speech paused');
+    }
+};
+
+window.stopSpeech = function() {
+    speechSynthesis.cancel();
+    showNotification('⏹️ Speech stopped');
+};
+
+window.updateRate = function() {
+    const rateControl = document.getElementById('rateControl');
+    const rateValue = document.getElementById('rateValue');
+    if (rateValue) rateValue.textContent = rateControl.value;
+};
+
+window.updatePitch = function() {
+    const pitchControl = document.getElementById('pitchControl');
+    const pitchValue = document.getElementById('pitchValue');
+    if (pitchValue) pitchValue.textContent = pitchControl.value;
+};
+
+// Audio Recording Functions
+window.startRecording = function() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        showNotification('❌ Audio recording not supported in this browser');
+        return;
+    }
+    
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            window.audioRecorder = new MediaRecorder(stream);
+            window.audioChunks = [];
+            
+            window.audioRecorder.ondataavailable = event => {
+                window.audioChunks.push(event.data);
+            };
+            
+            window.audioRecorder.onstop = () => {
+                const audioBlob = new Blob(window.audioChunks, { type: 'audio/wav' });
+                saveAudioNote(audioBlob);
+                stream.getTracks().forEach(track => track.stop());
+            };
+            
+            window.audioRecorder.start();
+            window.isRecording = true;
+            
+            document.getElementById('recordBtn').disabled = true;
+            document.getElementById('stopRecordBtn').disabled = false;
+            document.getElementById('recordingStatus').textContent = '🔴';
+            document.getElementById('recordingText').textContent = 'Recording in progress...';
+            
+            startRecordingTimer();
+            showNotification('🎙️ Recording started');
+        })
+        .catch(err => {
+            showNotification('❌ Could not access microphone');
+            console.error('Recording error:', err);
+        });
+};
+
+window.stopRecording = function() {
+    if (window.audioRecorder && window.isRecording) {
+        window.audioRecorder.stop();
+        window.isRecording = false;
+        
+        document.getElementById('recordBtn').disabled = false;
+        document.getElementById('stopRecordBtn').disabled = true;
+        document.getElementById('recordingStatus').textContent = '🎙️';
+        document.getElementById('recordingText').textContent = 'Recording saved!';
+        
+        stopRecordingTimer();
+        showNotification('✅ Recording saved!');
+    }
+};
+
+function startRecordingTimer() {
+    window.recordingStartTime = Date.now();
+    window.recordingTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - window.recordingStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+        const seconds = (elapsed % 60).toString().padStart(2, '0');
+        document.getElementById('recordingTimer').textContent = `${minutes}:${seconds}`;
+    }, 1000);
+}
+
+function stopRecordingTimer() {
+    if (window.recordingTimer) {
+        clearInterval(window.recordingTimer);
+        window.recordingTimer = null;
+    }
+}
+
+function saveAudioNote(audioBlob) {
+    const audioUrl = URL.createObjectURL(audioBlob);
+    const timestamp = new Date().toLocaleString();
+    const noteId = Date.now();
+    
+    const audioNotes = JSON.parse(localStorage.getItem('audioNotes') || '[]');
+    audioNotes.push({
+        id: noteId,
+        url: audioUrl,
+        timestamp: timestamp,
+        subject: playerState.subject,
+        chapter: playerState.chapter
+    });
+    
+    localStorage.setItem('audioNotes', JSON.stringify(audioNotes));
+    loadSavedAudioNotes();
+}
+
+function loadSavedAudioNotes() {
+    const savedNotes = document.getElementById('savedNotes');
+    if (!savedNotes) return;
+    
+    const audioNotes = JSON.parse(localStorage.getItem('audioNotes') || '[]');
+    
+    if (audioNotes.length === 0) {
+        savedNotes.innerHTML = '<div style="color: #999; text-align: center; padding: 2rem;">No audio notes recorded yet. Start recording to create your first divine scroll!</div>';
+        return;
+    }
+    
+    savedNotes.innerHTML = audioNotes.map(note => `
+        <div style="background: #333; border-radius: 8px; padding: 1rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <div style="color: #cd853f; font-weight: bold;">${note.subject} - ${note.chapter}</div>
+                <div style="color: #999; font-size: 0.9rem;">${note.timestamp}</div>
+            </div>
+            <div style="display: flex; gap: 0.5rem;">
+                <button onclick="playAudioNote('${note.url}')" style="background: #28a745; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">▶️ Play</button>
+                <button onclick="deleteAudioNote(${note.id})" style="background: #dc3545; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">🗑️ Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+window.playAudioNote = function(url) {
+    if (window.currentAudio) {
+        window.currentAudio.pause();
+    }
+    
+    window.currentAudio = new Audio(url);
+    window.currentAudio.play();
+    showNotification('🎧 Playing audio note');
+};
+
+window.deleteAudioNote = function(noteId) {
+    const audioNotes = JSON.parse(localStorage.getItem('audioNotes') || '[]');
+    const filteredNotes = audioNotes.filter(note => note.id !== noteId);
+    localStorage.setItem('audioNotes', JSON.stringify(filteredNotes));
+    loadSavedAudioNotes();
+    showNotification('🗑️ Audio note deleted');
+};
+
+// Audio Quiz Functions
+window.playQuizQuestion = function() {
+    const question = window.currentQuizQuestion.question;
+    
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(question);
+        utterance.rate = 0.9;
+        utterance.onend = () => {
+            document.getElementById('quizQuestion').style.display = 'block';
+            showNotification('👂 Question played - select your answer');
+        };
+        speechSynthesis.speak(utterance);
+    } else {
+        document.getElementById('quizQuestion').style.display = 'block';
+        showNotification('❌ Text-to-speech not supported');
+    }
+};
+
+window.selectAudioAnswer = function(selectedIndex, correctIndex) {
+    const buttons = document.querySelectorAll('#quizQuestion button');
+    buttons.forEach((btn, index) => {
+        if (index === correctIndex) {
+            btn.style.background = '#28a745';
+        } else if (index === selectedIndex && selectedIndex !== correctIndex) {
+            btn.style.background = '#dc3545';
+        }
+        btn.disabled = true;
+    });
+    
+    document.getElementById('audioQuizResult').style.display = 'block';
+    
+    const isCorrect = selectedIndex === correctIndex;
+    if (isCorrect) {
+        playerState.progress.xp += 15;
+        showNotification('✅ Correct! +15 XP');
+    } else {
+        showNotification('❌ Incorrect. Listen to the explanation!');
+    }
+    updateUI();
+};
+
+// Audio Flashcard Functions
+window.speakFlashcard = function(side) {
+    const flashcards = window.audioFlashcards;
+    const currentCard = flashcards[window.currentCardIndex];
+    const text = side === 'front' ? currentCard.front : currentCard.back;
+    
+    if ('speechSynthesis' in window) {
+        speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+        
+        if (side === 'back') {
+            document.getElementById('audioCardContent').textContent = currentCard.back;
+        }
+    } else {
+        showNotification('❌ Text-to-speech not supported');
+    }
+};
+
+window.nextAudioCard = function() {
+    const flashcards = window.audioFlashcards;
+    if (window.currentCardIndex < flashcards.length - 1) {
+        window.currentCardIndex++;
+        const currentCard = flashcards[window.currentCardIndex];
+        document.getElementById('audioCardContent').textContent = currentCard.front;
+        document.getElementById('cardNumber').textContent = window.currentCardIndex + 1;
+    }
+};
+
+window.previousAudioCard = function() {
+    if (window.currentCardIndex > 0) {
+        window.currentCardIndex--;
+        const currentCard = window.audioFlashcards[window.currentCardIndex];
+        document.getElementById('audioCardContent').textContent = currentCard.front;
+        document.getElementById('cardNumber').textContent = window.currentCardIndex + 1;
+    }
+};
+
+// Initialize voices when available
+if ('speechSynthesis' in window) {
+    speechSynthesis.onvoiceschanged = populateVoices;
 }
 
 // Interactive Functions

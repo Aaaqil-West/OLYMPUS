@@ -1008,7 +1008,7 @@ function playGame(gameType) {
             startZenPuzzle(gameArea);
             break;
         case 'breathing-game':
-            startBreathingGame(gameArea);
+            startBreathingGameMain(gameArea);
             break;
         case 'mood-monster':
             startMoodMonster(gameArea);
@@ -1170,7 +1170,7 @@ function shufflePuzzleGame() {
     updatePuzzleDisplay();
 }
 
-function startBreathingGame(gameArea) {
+function startBreathingGameMain(gameArea) {
     breathingGameScore = 0;
     breathingGameActive = false;
     
@@ -1395,7 +1395,7 @@ function colorClick(index) {
     playerSequence.push(index);
     
     if (playerSequence[playerSequence.length - 1] !== colorSequence[playerSequence.length - 1]) {
-        document.getElementById('color-message').textContent = 'Try again!';
+        document.getEledocument.getElementById('color-message').textContent = 'Try again!';
         setTimeout(startColorSequence, 1000);
         return;
     }
@@ -1537,73 +1537,7 @@ function updateAchievements() {
     achievementsList.innerHTML = html;
 }
 
-// Game Functions
-function playGame(gameType) {
-    const gameArea = document.getElementById('game-area');
-    
-    switch(gameType) {
-        case 'memory':
-            gameArea.innerHTML = '<div class="memory-game"><h3>Memory Palace</h3><p>Click cards to match pairs!</p><div id="memory-cards"></div><button onclick="startMemoryGame()">Start Game</button></div>';
-            break;
-        case 'puzzle':
-            gameArea.innerHTML = '<div class="puzzle-game"><h3>Zen Puzzles</h3><p>Drag pieces to complete the image</p><div id="puzzle-area">🧩 Puzzle loading...</div></div>';
-            break;
-        case 'breathing-game':
-            gameArea.innerHTML = '<div class="breathing-game"><h3>Breath Master</h3><p>Follow the circle to breathe</p><div id="breath-circle">⭕</div><button onclick="startBreathGame()">Start</button></div>';
-            break;
-        case 'mood-monster':
-            gameArea.innerHTML = '<div class="mood-game"><h3>Mood Monsters</h3><p>Click negative thoughts to defeat them!</p><div id="monsters"></div><button onclick="startMoodGame()">Battle!</button></div>';
-            break;
-        case 'word-calm':
-            gameArea.innerHTML = '<div class="word-game"><h3>Word Calm</h3><p>Find peaceful words</p><div id="word-grid"></div><button onclick="startWordGame()">Start</button></div>';
-            break;
-        case 'color-therapy':
-            gameArea.innerHTML = '<div class="color-game"><h3>Color Therapy</h3><p>Match colors to your mood</p><div id="color-palette"></div><button onclick="startColorGame()">Start</button></div>';
-            break;
-        case 'gratitude-garden':
-            gameArea.innerHTML = '<div class="garden-game"><h3>Gratitude Garden</h3><p>Plant flowers with gratitude</p><div id="garden-plot">🌱</div><button onclick="plantFlower()">Plant Gratitude</button></div>';
-            break;
-        case 'zen-stones':
-            gameArea.innerHTML = '<div class="stones-game"><h3>Zen Stones</h3><p>Balance the stones</p><div id="stone-stack">🪨</div><button onclick="balanceStones()">Balance</button></div>';
-            break;
-    }
-}
 
-function startMemoryGame() {
-    const cards = ['😊', '🌸', '🌟', '💙', '🌿', '✨'];
-    const gameCards = [...cards, ...cards].sort(() => Math.random() - 0.5);
-    const cardsHtml = gameCards.map((card, i) => `<div class="memory-card" onclick="flipCard(${i})">${i}</div>`).join('');
-    document.getElementById('memory-cards').innerHTML = cardsHtml;
-}
-
-function flipCard(index) {
-    alert('Card flipped! Memory game logic here.');
-}
-
-function startBreathGame() {
-    alert('Breathing game started! Follow the rhythm.');
-}
-
-function startMoodGame() {
-    document.getElementById('monsters').innerHTML = '👾 😈 👹 💀 - Click to defeat!';
-}
-
-function startWordGame() {
-    document.getElementById('word-grid').innerHTML = 'P E A C E<br>C A L M S<br>J O Y F U';
-}
-
-function startColorGame() {
-    document.getElementById('color-palette').innerHTML = '🔴 🟡 🟢 🔵 🟣 - Pick your mood color!';
-}
-
-function plantFlower() {
-    document.getElementById('garden-plot').innerHTML += ' 🌸';
-    alert('Flower planted with gratitude!');
-}
-
-function balanceStones() {
-    document.getElementById('stone-stack').innerHTML = '🪨<br>🪨<br>🪨 - Balanced!';
-}
 
 // Placeholder functions for remaining features
 function showCBTWorkshop() { alert('CBT Workshop - Coming Soon!'); }
