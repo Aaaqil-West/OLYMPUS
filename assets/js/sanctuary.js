@@ -1170,6 +1170,11 @@ const gameDescriptions = {
         title: '🪨 Zen Stones',
         description: 'Balance stones by clicking at the right moment. Requires focus and patience.',
         benefits: 'Develops patience, improves focus, promotes mindfulness and inner peace'
+    },
+    'mindful-matching': {
+        title: '🔮 Mindful Matching',
+        description: 'Match emotions with their corresponding healthy coping strategies.',
+        benefits: 'Reinforces emotional awareness, teaches coping skills, builds mental health knowledge'
     }
 };
 
@@ -1200,6 +1205,9 @@ function playGame(gameType) {
             break;
         case 'zen-stones':
             startZenStones(gameArea);
+            break;
+        case 'mindful-matching':
+            startMindfulMatching(gameArea);
             break;
     }
 }
@@ -1703,6 +1711,88 @@ function updateStones() {
         stones += '🪨';
     }
     document.getElementById('stone-tower').textContent = stones;
+}
+
+let matchingPairs = [];
+let selectedCards = [];
+let matchingScore = 0;
+
+function startMindfulMatching(gameArea) {
+    const emotions = ['😰 Anxiety', '😢 Sadness', '😡 Anger', '😵 Stress'];
+    const strategies = ['🌬️ Deep Breathing', '🤝 Talk to Friend', '🏃 Exercise', '🧘 Meditation'];
+    
+    matchingPairs = [...emotions, ...strategies].sort(() => Math.random() - 0.5);
+    selectedCards = [];
+    matchingScore = 0;
+    
+    let html = `
+        <div class="mindful-matching-game">
+            <h3>🔮 Mindful Matching</h3>
+            <p>Match emotions with healthy coping strategies. Score: <span id="matching-score">0</span></p>
+            <div class="matching-grid">
+    `;
+    
+    matchingPairs.forEach((item, i) => {
+        html += `<div class="matching-card" onclick="selectMatchingCard(${i})" data-index="${i}">
+                    <div class="card-content">${item}</div>
+                 </div>`;
+    });
+    
+    html += `</div><button onclick="resetMatchingGame()">New Game</button></div>`;
+    gameArea.innerHTML = html;
+}
+
+function selectMatchingCard(index) {
+    if (selectedCards.length >= 2 || selectedCards.includes(index)) return;
+    
+    const card = document.querySelector(`[data-index="${index}"]`);
+    card.classList.add('selected');
+    selectedCards.push(index);
+    
+    if (selectedCards.length === 2) {
+        setTimeout(checkMatchingPair, 800);
+    }
+}
+
+function checkMatchingPair() {
+    const [first, second] = selectedCards;
+    const firstItem = matchingPairs[first];
+    const secondItem = matchingPairs[second];
+    
+    const matches = [
+        ['😰 Anxiety', '🌬️ Deep Breathing'],
+        ['😢 Sadness', '🤝 Talk to Friend'],
+        ['😡 Anger', '🏃 Exercise'],
+        ['😵 Stress', '🧘 Meditation']
+    ];
+    
+    const isMatch = matches.some(pair => 
+        (pair[0] === firstItem && pair[1] === secondItem) ||
+        (pair[1] === firstItem && pair[0] === secondItem)
+    );
+    
+    const firstCard = document.querySelector(`[data-index="${first}"]`);
+    const secondCard = document.querySelector(`[data-index="${second}"]`);
+    
+    if (isMatch) {
+        matchingScore += 10;
+        document.getElementById('matching-score').textContent = matchingScore;
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        
+        if (document.querySelectorAll('.matched').length === matchingPairs.length) {
+            setTimeout(() => alert('🎉 Perfect! You understand healthy coping strategies!'), 500);
+        }
+    } else {
+        firstCard.classList.remove('selected');
+        secondCard.classList.remove('selected');
+    }
+    selectedCards = [];
+}
+
+function resetMatchingGame() {
+    const gameArea = document.getElementById('game-area');
+    startMindfulMatching(gameArea);
 }
 
 function showProgressDashboard() {
