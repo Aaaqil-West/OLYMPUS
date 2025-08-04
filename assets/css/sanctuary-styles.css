@@ -1149,6 +1149,7 @@ input[type="range"]::-webkit-slider-thumb {
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    border-radius: 12px;
 }
 
 .card-front {
@@ -1156,11 +1157,23 @@ input[type="range"]::-webkit-slider-thumb {
     color: var(--apollo-gold);
     font-weight: bold;
     font-size: 1.5rem;
+    z-index: 2;
 }
 
 .card-back {
     background: linear-gradient(45deg, var(--apollo-gold), var(--light-orange));
     color: white;
+    z-index: 1;
+}
+
+.card-front.hidden, .card-back.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.card-front:not(.hidden), .card-back:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Zen Puzzle */
