@@ -65,6 +65,12 @@
                         <button onclick="showCopingStrategies()">🛡️ Coping Arsenal</button>
                         <button onclick="showSafetyPlanning()">🛡️ Safety Planning</button>
                     </div>
+                    <div class="menu-category">
+                        <h3>🔧 Advanced Tools</h3>
+                        <button onclick="showHabitTracker()">📋 Habit Tracker</button>
+                        <button onclick="showCrisisIntervention()">🆘 Crisis Support</button>
+                        <button onclick="showPersonalizedDashboard()">🎯 Personal Dashboard</button>
+                    </div>
                 </div>
             </div>
 
@@ -283,6 +289,7 @@
                     <div class="pet-display">
                         <div id="pet-avatar">🐶</div>
                         <div id="pet-name">Apollo Jr.</div>
+                        <div id="pet-level">Level 0</div>
                         <div class="pet-stats">
                             <div class="stat-bar">
                                 <label>Happiness:</label>
@@ -296,6 +303,10 @@
                                 <label>Energy:</label>
                                 <div class="bar"><div id="energy-bar" class="fill"></div></div>
                             </div>
+                            <div class="pet-currency">
+                                <span>🪙 Coins: <span id="pet-coins">20</span></span>
+                                <span>✨ XP: <span id="pet-xp">0</span></span>
+                            </div>
                         </div>
                     </div>
                     <div class="pet-actions">
@@ -303,6 +314,10 @@
                         <button onclick="playWithPet()">🎾 Play</button>
                         <button onclick="petCare()">💕 Care</button>
                         <button onclick="petWalk()">🚶 Walk</button>
+                        <button onclick="trainPet()">🎓 Train</button>
+                        <button onclick="petMeditate()">🧘 Meditate</button>
+                        <button onclick="giveTreat()">🍪 Treat</button>
+                        <button onclick="earnCoins()">🪙 Daily Coins</button>
                     </div>
                     <div id="pet-messages"></div>
                 </div>
@@ -515,6 +530,143 @@
                     </div>
                 </div>
                 <div id="game-area"></div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- CBT Workshop Section -->
+            <div id="cbt-workshop" class="section hidden">
+                <h2>🧠 CBT Workshop</h2>
+                <p>Learn and practice Cognitive Behavioral Therapy techniques</p>
+                <div class="cbt-exercises">
+                    <button onclick="startCBTExercise('thought-challenging')">🧠 Thought Challenging</button>
+                    <button onclick="startCBTExercise('behavioral-activation')">🎯 Behavioral Activation</button>
+                    <button onclick="startCBTExercise('mindfulness-cbt')">🧘 Mindful Awareness</button>
+                </div>
+                <div id="cbt-content"></div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Community Hub Section -->
+            <div id="community-hub" class="section hidden">
+                <h2>👥 Community Hub</h2>
+                <p>Connect with others on their healing journey</p>
+                <div id="community-content"></div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Professional Help Section -->
+            <div id="professional-help" class="section hidden">
+                <h2>👨‍⚕️ Find Professional Help</h2>
+                <p>Connect with qualified mental health professionals</p>
+                <div class="help-finder">
+                    <div class="search-filters">
+                        <input type="text" placeholder="Enter your location" id="location-input">
+                        <select id="specialty-filter">
+                            <option value="all">All Specialties</option>
+                            <option value="anxiety">Anxiety Disorders</option>
+                            <option value="depression">Depression</option>
+                            <option value="trauma">Trauma & PTSD</option>
+                            <option value="relationships">Relationships</option>
+                        </select>
+                        <button onclick="findTherapists()">🔍 Find Therapists</button>
+                    </div>
+                    <div id="therapist-results"></div>
+                </div>
+                <div class="help-resources">
+                    <h3>Additional Resources:</h3>
+                    <ul>
+                        <li>Psychology Today Therapist Directory</li>
+                        <li>Your insurance provider's network</li>
+                        <li>Community mental health centers</li>
+                        <li>University counseling centers</li>
+                    </ul>
+                </div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Art Therapy Section -->
+            <div id="art-therapy" class="section hidden">
+                <h2>🎨 Art Therapy Studio</h2>
+                <p>Express yourself through healing art</p>
+                <div class="art-studio">
+                    <div class="art-tools">
+                        <label>Color: <input type="color" id="color-picker" value="#000000"></label>
+                        <button onclick="clearCanvas()">🗑️ Clear</button>
+                        <button onclick="saveArtwork()">💾 Save</button>
+                    </div>
+                    <canvas id="art-canvas" width="600" height="400"></canvas>
+                    <div class="art-prompts">
+                        <h3>Healing Art Prompts:</h3>
+                        <ul>
+                            <li>Draw how you're feeling right now</li>
+                            <li>Create your safe space</li>
+                            <li>Illustrate your hopes and dreams</li>
+                            <li>Express gratitude through colors</li>
+                        </ul>
+                    </div>
+                </div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Music Therapy Section -->
+            <div id="music-therapy" class="section hidden">
+                <h2>🎵 Music Therapy Center</h2>
+                <p>Heal through the power of sound and music</p>
+                <div class="music-options">
+                    <button onclick="playMusicTherapy('nature')">🌿 Nature Sounds</button>
+                    <button onclick="playMusicTherapy('binaural')">🧠 Binaural Beats</button>
+                    <button onclick="playMusicTherapy('classical')">🎼 Classical Therapy</button>
+                    <button onclick="playMusicTherapy('ambient')">🌌 Ambient Healing</button>
+                </div>
+                <div id="music-player"></div>
+                <div id="music-info"></div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Education Hub Section -->
+            <div id="education-hub" class="section hidden">
+                <h2>📚 Wellness Education Hub</h2>
+                <p>Learn about mental health and wellness</p>
+                <div id="education-content"></div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Habit Tracker Section -->
+            <div id="habit-tracker" class="section hidden">
+                <h2>📋 Habit Tracker</h2>
+                <p>Build positive habits for lasting wellness</p>
+                <div class="habit-form">
+                    <input type="text" id="habit-input" placeholder="Enter a new wellness habit...">
+                    <button onclick="addHabit()">➕ Add Habit</button>
+                </div>
+                <div id="habits-list"></div>
+                <div class="habit-suggestions">
+                    <h3>💡 Habit Ideas:</h3>
+                    <div class="suggestion-tags">
+                        <span onclick="document.getElementById('habit-input').value='Daily meditation'">🧘 Daily meditation</span>
+                        <span onclick="document.getElementById('habit-input').value='Gratitude journaling'">📝 Gratitude journaling</span>
+                        <span onclick="document.getElementById('habit-input').value='Morning walk'">🚶 Morning walk</span>
+                        <span onclick="document.getElementById('habit-input').value='Deep breathing'">🌬️ Deep breathing</span>
+                        <span onclick="document.getElementById('habit-input').value='Drink water'">💧 Drink water</span>
+                    </div>
+                </div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Crisis Intervention Section -->
+            <div id="crisis-intervention" class="section hidden">
+                <h2>🆘 Crisis Support System</h2>
+                <p>Immediate support when you need it most</p>
+                <div id="crisis-assessment"></div>
+                <div id="crisis-response"></div>
+                <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
+            </div>
+
+            <!-- Personalized Dashboard Section -->
+            <div id="personalized-dashboard" class="section hidden">
+                <h2>🎯 Your Personal Wellness Dashboard</h2>
+                <p>Tailored recommendations based on your journey</p>
+                <div id="dashboard-content"></div>
                 <button onclick="showMenu()" class="back-btn">← Back to Menu</button>
             </div>
 

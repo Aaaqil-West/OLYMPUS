@@ -8,7 +8,10 @@ let thoughtRecords = JSON.parse(localStorage.getItem('thoughtRecords')) || [];
 let anxietyRecords = JSON.parse(localStorage.getItem('anxietyRecords')) || [];
 let sleepRecords = JSON.parse(localStorage.getItem('sleepRecords')) || [];
 let safetyPlan = JSON.parse(localStorage.getItem('safetyPlan')) || {};
-let petData = JSON.parse(localStorage.getItem('petData')) || { happiness: 80, health: 90, energy: 70, name: 'Apollo Jr.' };
+let petData = JSON.parse(localStorage.getItem('petData')) || { 
+    happiness: 80, health: 90, energy: 70, name: 'Apollo Jr.', 
+    intelligence: 50, zen: 0, experience: 0, coins: 20, lastLevel: 0 
+};
 let wellnessStreak = JSON.parse(localStorage.getItem('wellnessStreak')) || 0;
 let achievements = JSON.parse(localStorage.getItem('achievements')) || [];
 
@@ -612,43 +615,160 @@ function updatePetDisplay() {
     document.getElementById('health-bar').style.width = petData.health + '%';
     document.getElementById('energy-bar').style.width = petData.energy + '%';
     
-    // Update pet avatar based on mood
+    // Update pet avatar based on mood and evolution
     const avatar = document.getElementById('pet-avatar');
-    if (petData.happiness > 80) avatar.textContent = '😊🐶';
-    else if (petData.happiness > 50) avatar.textContent = '🙂🐶';
-    else avatar.textContent = '😔🐶';
+    const level = Math.floor((petData.happiness + petData.health + petData.energy) / 30);
+    
+    if (level >= 9) avatar.textContent = '✨🦄'; // Divine form
+    else if (level >= 7) avatar.textContent = '🌟🐺'; // Wolf form
+    else if (level >= 5) avatar.textContent = '😊🐶'; // Happy dog
+    else if (level >= 3) avatar.textContent = '🙂🐶'; // Normal dog
+    else avatar.textContent = '😔🐶'; // Sad dog
+    
+    // Update level display
+    document.getElementById('pet-level').textContent = `Level ${level}`;
+    document.getElementById('pet-coins').textContent = petData.coins || 0;
+    document.getElementById('pet-xp').textContent = petData.experience || 0;
+    
+    // Show evolution message
+    if (level !== petData.lastLevel) {
+        if (level > petData.lastLevel) {
+            showPetMessage(`🎉 ${petData.name} evolved to Level ${level}!`);
+        }
+        petData.lastLevel = level;
+        localStorage.setItem('petData', JSON.stringify(petData));
+    }
 }
 
 function feedPet() {
-    petData.happiness = Math.min(100, petData.happiness + 10);
-    petData.health = Math.min(100, petData.health + 5);
+    if (petData.lastFed && new Date().toDateString() === petData.lastFed) {
+        showPetMessage('Your pet is already well-fed today! 🍽️');
+        return;
+    }
+    
+    petData.happiness = Math.min(100, petData.happiness + 15);
+    petData.health = Math.min(100, petData.health + 10);
+    petData.lastFed = new Date().toDateString();
+    petData.experience = (petData.experience || 0) + 5;
     localStorage.setItem('petData', JSON.stringify(petData));
     updatePetDisplay();
-    showPetMessage('Your pet feels loved and well-fed! 🍖');
+    showPetMessage('Your pet feels loved and well-fed! 🍖 (+5 XP)');
 }
 
 function playWithPet() {
-    petData.happiness = Math.min(100, petData.happiness + 15);
-    petData.energy = Math.max(0, petData.energy - 10);
+    if (petData.energy < 20) {
+        showPetMessage('Your pet is too tired to play! Let them rest. 😴');
+        return;
+    }
+    
+    const games = ['fetch', 'tug-of-war', 'hide-and-seek', 'frisbee'];
+    const game = games[Math.floor(Math.random() * games.length)];
+    
+    petData.happiness = Math.min(100, petData.happiness + 20);
+    petData.energy = Math.max(0, petData.energy - 15);
+    petData.experience = (petData.experience || 0) + 8;
     localStorage.setItem('petData', JSON.stringify(petData));
     updatePetDisplay();
-    showPetMessage('Your pet had so much fun playing! 🎾');
+    showPetMessage(`Your pet loved playing ${game}! 🎾 (+8 XP)`);
 }
 
 function petCare() {
-    petData.health = Math.min(100, petData.health + 10);
-    petData.happiness = Math.min(100, petData.happiness + 5);
+    petData.health = Math.min(100, petData.health + 15);
+    petData.happiness = Math.min(100, petData.happiness + 10);
+    petData.experience = (petData.experience || 0) + 6;
     localStorage.setItem('petData', JSON.stringify(petData));
     updatePetDisplay();
-    showPetMessage('Your pet feels cared for and healthy! 💕');
+    showPetMessage('Your pet feels cared for and healthy! 💕 (+6 XP)');
 }
 
 function petWalk() {
-    petData.energy = Math.min(100, petData.energy + 20);
-    petData.happiness = Math.min(100, petData.happiness + 8);
+    petData.energy = Math.min(100, petData.energy + 25);
+    petData.happiness = Math.min(100, petData.happiness + 12);
+    petData.health = Math.min(100, petData.health + 8);
+    petData.experience = (petData.experience || 0) + 10;
+    
+    // Random encounter during walk
+    const encounters = [
+        'found a shiny coin! 🪙',
+        'met a friendly squirrel! 🐿️',
+        'discovered a beautiful flower! 🌸',
+        'splashed in a puddle! 💦',
+        'chased some butterflies! 🦋'
+    ];
+    const encounter = encounters[Math.floor(Math.random() * encounters.length)];
+    
     localStorage.setItem('petData', JSON.stringify(petData));
     updatePetDisplay();
-    showPetMessage('What a refreshing walk! Your pet is energized! 🚶‍♂️');
+    showPetMessage(`Great walk! Your pet ${encounter} (+10 XP)`);
+}
+
+function trainPet() {
+    if (petData.energy < 30) {
+        showPetMessage('Your pet needs more energy for training! 🏃');
+        return;
+    }
+    
+    const skills = ['sit', 'stay', 'roll over', 'shake hands', 'speak'];
+    const skill = skills[Math.floor(Math.random() * skills.length)];
+    
+    petData.intelligence = Math.min(100, (petData.intelligence || 50) + 5);
+    petData.energy = Math.max(0, petData.energy - 25);
+    petData.experience = (petData.experience || 0) + 15;
+    localStorage.setItem('petData', JSON.stringify(petData));
+    updatePetDisplay();
+    showPetMessage(`${petData.name} learned to ${skill}! 🎓 (+15 XP)`);
+}
+
+function petMeditate() {
+    petData.happiness = Math.min(100, petData.happiness + 8);
+    petData.health = Math.min(100, petData.health + 5);
+    petData.zen = Math.min(100, (petData.zen || 0) + 10);
+    petData.experience = (petData.experience || 0) + 7;
+    localStorage.setItem('petData', JSON.stringify(petData));
+    updatePetDisplay();
+    showPetMessage('Your pet found inner peace through meditation! 🧘‍♂️ (+7 XP)');
+}
+
+function giveTreat() {
+    const treats = {
+        'healing': { name: 'Healing Treat', health: 20, cost: 10 },
+        'energy': { name: 'Energy Boost', energy: 30, cost: 15 },
+        'happiness': { name: 'Joy Biscuit', happiness: 25, cost: 12 }
+    };
+    
+    const treatType = Object.keys(treats)[Math.floor(Math.random() * 3)];
+    const treat = treats[treatType];
+    
+    if ((petData.coins || 0) < treat.cost) {
+        showPetMessage(`Not enough coins for ${treat.name}! Need ${treat.cost} coins. 🪙`);
+        return;
+    }
+    
+    petData.coins = (petData.coins || 0) - treat.cost;
+    if (treat.health) petData.health = Math.min(100, petData.health + treat.health);
+    if (treat.energy) petData.energy = Math.min(100, petData.energy + treat.energy);
+    if (treat.happiness) petData.happiness = Math.min(100, petData.happiness + treat.happiness);
+    
+    localStorage.setItem('petData', JSON.stringify(petData));
+    updatePetDisplay();
+    showPetMessage(`${petData.name} enjoyed the ${treat.name}! ✨`);
+}
+
+function earnCoins() {
+    const dailyCoins = localStorage.getItem('dailyCoins');
+    const today = new Date().toDateString();
+    
+    if (dailyCoins === today) {
+        showPetMessage('Already earned daily coins! Come back tomorrow! 🪙');
+        return;
+    }
+    
+    const earned = Math.floor(Math.random() * 10) + 5;
+    petData.coins = (petData.coins || 0) + earned;
+    localStorage.setItem('petData', JSON.stringify(petData));
+    localStorage.setItem('dailyCoins', today);
+    updatePetDisplay();
+    showPetMessage(`Earned ${earned} coins for daily care! 🪙`);
 }
 
 function showPetMessage(message) {
@@ -1637,14 +1757,711 @@ function updateAchievements() {
 
 
 
-// Placeholder functions for remaining features
-function showCBTWorkshop() { alert('CBT Workshop - Coming Soon!'); }
-function showCommunityHub() { alert('Community Hub - Coming Soon!'); }
-function showProfessionalHelp() { alert('Professional Help Finder - Coming Soon!'); }
-function showArtTherapy() { alert('Art Therapy - Coming Soon!'); }
-function showMusicTherapy() { alert('Music Therapy - Coming Soon!'); }
-function showEducationHub() { alert('Education Hub - Coming Soon!'); }
+// CBT Workshop Implementation
+function showCBTWorkshop() {
+    hideAllSections();
+    document.getElementById('cbt-workshop').classList.remove('hidden');
+}
+
+function startCBTExercise(type) {
+    const exercises = {
+        'thought-challenging': {
+            title: '🧠 Thought Challenging',
+            steps: [
+                'Identify the negative thought',
+                'What evidence supports this thought?',
+                'What evidence contradicts it?',
+                'What would you tell a friend?',
+                'Create a balanced perspective'
+            ]
+        },
+        'behavioral-activation': {
+            title: '🎯 Behavioral Activation',
+            steps: [
+                'List activities you used to enjoy',
+                'Rate each from 1-10 for pleasure/mastery',
+                'Schedule one small activity today',
+                'Notice your mood before/after',
+                'Gradually increase pleasant activities'
+            ]
+        },
+        'mindfulness-cbt': {
+            title: '🧘 Mindful Awareness',
+            steps: [
+                'Notice the thought without judgment',
+                'Observe where you feel it in your body',
+                'Breathe and create space around it',
+                'Ask: "Is this thought helpful?"',
+                'Choose your response mindfully'
+            ]
+        }
+    };
+    
+    const exercise = exercises[type];
+    const content = document.getElementById('cbt-content');
+    
+    let html = `<div class="cbt-exercise">
+                   <h3>${exercise.title}</h3>
+                   <div class="cbt-steps">`;
+    
+    exercise.steps.forEach((step, i) => {
+        html += `<div class="cbt-step">
+                    <span class="step-number">${i + 1}</span>
+                    <span class="step-text">${step}</span>
+                 </div>`;
+    });
+    
+    html += `</div>
+             <button onclick="completeCBTExercise('${type}')">Complete Exercise</button>
+             </div>`;
+    
+    content.innerHTML = html;
+}
+
+function completeCBTExercise(type) {
+    alert('🎉 Great work! CBT techniques take practice - the more you use them, the more natural they become.');
+    document.getElementById('cbt-content').innerHTML = '<p>Choose another exercise above to continue your CBT practice.</p>';
+}
+
+// Community Hub Implementation
+function showCommunityHub() {
+    hideAllSections();
+    document.getElementById('community-hub').classList.remove('hidden');
+    loadCommunityContent();
+}
+
+function loadCommunityContent() {
+    const content = document.getElementById('community-content');
+    content.innerHTML = `
+        <div class="community-features">
+            <div class="feature-card">
+                <h3>💬 Support Groups</h3>
+                <p>Connect with others on similar journeys</p>
+                <div class="group-list">
+                    <div class="group-item">🌅 Morning Motivation (Daily 8 AM)</div>
+                    <div class="group-item">🌙 Evening Reflection (Daily 8 PM)</div>
+                    <div class="group-item">💪 Anxiety Warriors (Mon/Wed/Fri)</div>
+                    <div class="group-item">🌱 Growth Mindset (Weekends)</div>
+                </div>
+                <button onclick="joinGroup()">Join a Group</button>
+            </div>
+            <div class="feature-card">
+                <h3>📝 Shared Stories</h3>
+                <p>Read inspiring recovery stories</p>
+                <div class="story-preview">
+                    <div class="story">"How I overcame social anxiety" - Sarah M.</div>
+                    <div class="story">"Finding hope after depression" - Alex K.</div>
+                    <div class="story">"My mindfulness journey" - Jordan L.</div>
+                </div>
+                <button onclick="readStories()">Read Stories</button>
+            </div>
+            <div class="feature-card">
+                <h3>🎯 Group Challenges</h3>
+                <p>Participate in wellness challenges</p>
+                <div class="challenge-list">
+                    <div class="challenge">🚶 30-Day Walking Challenge</div>
+                    <div class="challenge">📖 Gratitude Journal Week</div>
+                    <div class="challenge">🧘 Meditation Marathon</div>
+                </div>
+                <button onclick="joinChallenge()">Join Challenge</button>
+            </div>
+        </div>
+    `;
+}
+
+function joinGroup() {
+    alert('🤝 Welcome to the community! Remember: this is a safe space for support and growth.');
+}
+
+function readStories() {
+    alert('📖 These stories remind us that healing is possible and we\'re not alone in our struggles.');
+}
+
+function joinChallenge() {
+    alert('🎯 Challenge accepted! Small daily actions create lasting change.');
+}
+
+// Professional Help Finder
+function showProfessionalHelp() {
+    hideAllSections();
+    document.getElementById('professional-help').classList.remove('hidden');
+}
+
+function findTherapists() {
+    const results = document.getElementById('therapist-results');
+    results.innerHTML = `
+        <div class="therapist-list">
+            <div class="therapist-card">
+                <h4>Dr. Sarah Johnson, LCSW</h4>
+                <p>Specializes in: Anxiety, Depression, CBT</p>
+                <p>📍 Downtown Location | 💻 Telehealth Available</p>
+                <p>⭐ 4.9/5 rating | 💰 $120/session</p>
+                <button onclick="contactTherapist('Dr. Johnson')">Contact</button>
+            </div>
+            <div class="therapist-card">
+                <h4>Michael Chen, PhD</h4>
+                <p>Specializes in: Trauma, PTSD, EMDR</p>
+                <p>📍 Midtown Location | 💻 Telehealth Available</p>
+                <p>⭐ 4.8/5 rating | 💰 $150/session</p>
+                <button onclick="contactTherapist('Dr. Chen')">Contact</button>
+            </div>
+            <div class="therapist-card">
+                <h4>Dr. Emily Rodriguez, LMFT</h4>
+                <p>Specializes in: Relationships, Family Therapy</p>
+                <p>📍 Westside Location | 💻 Telehealth Available</p>
+                <p>⭐ 4.7/5 rating | 💰 $130/session</p>
+                <button onclick="contactTherapist('Dr. Rodriguez')">Contact</button>
+            </div>
+        </div>
+    `;
+}
+
+function contactTherapist(name) {
+    alert(`📞 Great choice! Reaching out to ${name} is a brave step toward healing.`);
+}
+
+// Art Therapy Implementation
+function showArtTherapy() {
+    hideAllSections();
+    document.getElementById('art-therapy').classList.remove('hidden');
+    initializeCanvas();
+}
+
+function initializeCanvas() {
+    const canvas = document.getElementById('art-canvas');
+    const ctx = canvas.getContext('2d');
+    let isDrawing = false;
+    
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    
+    function startDrawing(e) {
+        isDrawing = true;
+        draw(e);
+    }
+    
+    function draw(e) {
+        if (!isDrawing) return;
+        
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = document.getElementById('color-picker').value;
+        
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+    }
+    
+    function stopDrawing() {
+        isDrawing = false;
+        ctx.beginPath();
+    }
+}
+
+function clearCanvas() {
+    const canvas = document.getElementById('art-canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function saveArtwork() {
+    const canvas = document.getElementById('art-canvas');
+    const link = document.createElement('a');
+    link.download = 'my-healing-art.png';
+    link.href = canvas.toDataURL();
+    link.click();
+    alert('🎨 Your healing artwork has been saved! Art is a powerful form of self-expression.');
+}
+
+// Music Therapy Implementation
+function showMusicTherapy() {
+    hideAllSections();
+    document.getElementById('music-therapy').classList.remove('hidden');
+}
+
+function playMusicTherapy(type) {
+    const player = document.getElementById('music-player');
+    const info = document.getElementById('music-info');
+    
+    const musicTypes = {
+        'nature': {
+            title: '🌿 Nature Sounds',
+            description: 'Calming forest and ocean sounds for relaxation',
+            benefits: 'Reduces stress, improves focus, promotes sleep'
+        },
+        'binaural': {
+            title: '🧠 Binaural Beats',
+            description: 'Frequencies designed to promote specific brainwave states',
+            benefits: 'Enhances meditation, reduces anxiety, improves concentration'
+        },
+        'classical': {
+            title: '🎼 Classical Therapy',
+            description: 'Carefully selected classical pieces for emotional healing',
+            benefits: 'Elevates mood, reduces depression, stimulates creativity'
+        },
+        'ambient': {
+            title: '🌌 Ambient Healing',
+            description: 'Ethereal soundscapes for deep relaxation',
+            benefits: 'Promotes mindfulness, reduces racing thoughts, aids sleep'
+        }
+    };
+    
+    const music = musicTypes[type];
+    info.innerHTML = `
+        <div class="music-session">
+            <h3>${music.title}</h3>
+            <p>${music.description}</p>
+            <div class="benefits">Benefits: ${music.benefits}</div>
+            <div class="music-controls">
+                <button onclick="startMusicSession('${type}')">▶️ Play</button>
+                <button onclick="pauseMusic()">⏸️ Pause</button>
+                <button onclick="stopMusic()">⏹️ Stop</button>
+            </div>
+            <div class="session-timer" id="music-timer">00:00</div>
+        </div>
+    `;
+}
+
+let musicTimer = null;
+let musicDuration = 0;
+
+function startMusicSession(type) {
+    musicDuration = 0;
+    musicTimer = setInterval(() => {
+        musicDuration++;
+        const minutes = Math.floor(musicDuration / 60);
+        const seconds = musicDuration % 60;
+        document.getElementById('music-timer').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
+    
+    alert(`🎵 Starting ${type} therapy session. Find a comfortable position and let the healing sounds wash over you.`);
+}
+
+function pauseMusic() {
+    if (musicTimer) {
+        clearInterval(musicTimer);
+        musicTimer = null;
+    }
+}
+
+function stopMusic() {
+    if (musicTimer) {
+        clearInterval(musicTimer);
+        musicTimer = null;
+    }
+    musicDuration = 0;
+    document.getElementById('music-timer').textContent = '00:00';
+    alert('🎵 Music therapy session complete. Notice how you feel now compared to when you started.');
+}
+
+// Education Hub Implementation
+function showEducationHub() {
+    hideAllSections();
+    document.getElementById('education-hub').classList.remove('hidden');
+    loadEducationContent();
+}
+
+function loadEducationContent() {
+    const content = document.getElementById('education-content');
+    content.innerHTML = `
+        <div class="education-categories">
+            <div class="category-card" onclick="showEducationTopic('anxiety')">
+                <h3>😰 Understanding Anxiety</h3>
+                <p>Learn about anxiety disorders, symptoms, and management strategies</p>
+            </div>
+            <div class="category-card" onclick="showEducationTopic('depression')">
+                <h3>😔 Depression Awareness</h3>
+                <p>Comprehensive guide to depression, its causes, and treatment options</p>
+            </div>
+            <div class="category-card" onclick="showEducationTopic('mindfulness')">
+                <h3>🧘 Mindfulness & Meditation</h3>
+                <p>Practical guides to mindfulness practices and meditation techniques</p>
+            </div>
+            <div class="category-card" onclick="showEducationTopic('relationships')">
+                <h3>💕 Healthy Relationships</h3>
+                <p>Building and maintaining healthy relationships and communication skills</p>
+            </div>
+            <div class="category-card" onclick="showEducationTopic('stress')">
+                <h3>😵 Stress Management</h3>
+                <p>Effective strategies for managing and reducing stress in daily life</p>
+            </div>
+            <div class="category-card" onclick="showEducationTopic('self-care')">
+                <h3>🌱 Self-Care Essentials</h3>
+                <p>Comprehensive guide to physical, emotional, and mental self-care</p>
+            </div>
+        </div>
+        <div id="education-topic-content"></div>
+    `;
+}
+
+function showEducationTopic(topic) {
+    const topicContent = document.getElementById('education-topic-content');
+    
+    const topics = {
+        'anxiety': {
+            title: '😰 Understanding Anxiety',
+            content: `
+                <h4>What is Anxiety?</h4>
+                <p>Anxiety is a natural response to stress, but when it becomes overwhelming or persistent, it may indicate an anxiety disorder.</p>
+                
+                <h4>Common Symptoms:</h4>
+                <ul>
+                    <li>Excessive worry or fear</li>
+                    <li>Physical symptoms (racing heart, sweating, trembling)</li>
+                    <li>Avoidance of certain situations</li>
+                    <li>Difficulty concentrating</li>
+                    <li>Sleep disturbances</li>
+                </ul>
+                
+                <h4>Management Strategies:</h4>
+                <ul>
+                    <li>Deep breathing exercises</li>
+                    <li>Progressive muscle relaxation</li>
+                    <li>Cognitive behavioral therapy techniques</li>
+                    <li>Regular exercise and healthy lifestyle</li>
+                    <li>Professional support when needed</li>
+                </ul>
+            `
+        },
+        'depression': {
+            title: '😔 Depression Awareness',
+            content: `
+                <h4>Understanding Depression:</h4>
+                <p>Depression is more than feeling sad - it's a serious mental health condition that affects how you feel, think, and handle daily activities.</p>
+                
+                <h4>Warning Signs:</h4>
+                <ul>
+                    <li>Persistent sadness or empty mood</li>
+                    <li>Loss of interest in activities</li>
+                    <li>Changes in appetite or sleep</li>
+                    <li>Fatigue or loss of energy</li>
+                    <li>Feelings of worthlessness or guilt</li>
+                </ul>
+                
+                <h4>Path to Recovery:</h4>
+                <ul>
+                    <li>Professional therapy and counseling</li>
+                    <li>Medication when appropriate</li>
+                    <li>Social support and connection</li>
+                    <li>Regular exercise and self-care</li>
+                    <li>Mindfulness and stress reduction</li>
+                </ul>
+            `
+        },
+        'mindfulness': {
+            title: '🧘 Mindfulness & Meditation',
+            content: `
+                <h4>What is Mindfulness?</h4>
+                <p>Mindfulness is the practice of being fully present and engaged in the current moment, without judgment.</p>
+                
+                <h4>Benefits:</h4>
+                <ul>
+                    <li>Reduced stress and anxiety</li>
+                    <li>Improved emotional regulation</li>
+                    <li>Better focus and concentration</li>
+                    <li>Enhanced self-awareness</li>
+                    <li>Improved relationships</li>
+                </ul>
+                
+                <h4>Simple Practices:</h4>
+                <ul>
+                    <li>5-minute daily meditation</li>
+                    <li>Mindful breathing exercises</li>
+                    <li>Body scan meditation</li>
+                    <li>Mindful walking</li>
+                    <li>Gratitude practice</li>
+                </ul>
+            `
+        }
+    };
+    
+    const selectedTopic = topics[topic] || topics['anxiety'];
+    topicContent.innerHTML = `
+        <div class="topic-detail">
+            <h3>${selectedTopic.title}</h3>
+            ${selectedTopic.content}
+            <button onclick="completeLesson('${topic}')">Mark as Read</button>
+        </div>
+    `;
+}
+
+function completeLesson(topic) {
+    alert('📚 Great job learning about mental health! Knowledge is power on your healing journey.');
+}
+
 function showWellnessStreaks() { showProgressDashboard(); }
+
+// Advanced Habit Tracker
+let habitData = JSON.parse(localStorage.getItem('habitData')) || [];
+
+function showHabitTracker() {
+    hideAllSections();
+    document.getElementById('habit-tracker').classList.remove('hidden');
+    displayHabits();
+}
+
+function addHabit() {
+    const habitName = document.getElementById('habit-input').value.trim();
+    if (habitName) {
+        const habit = {
+            id: Date.now(),
+            name: habitName,
+            streak: 0,
+            completedDates: [],
+            created: new Date().toLocaleDateString()
+        };
+        habitData.push(habit);
+        localStorage.setItem('habitData', JSON.stringify(habitData));
+        document.getElementById('habit-input').value = '';
+        displayHabits();
+    }
+}
+
+function displayHabits() {
+    const habitsList = document.getElementById('habits-list');
+    if (habitData.length === 0) {
+        habitsList.innerHTML = '<p>No habits tracked yet. Add your first wellness habit above!</p>';
+        return;
+    }
+    
+    let html = '';
+    habitData.forEach(habit => {
+        const today = new Date().toLocaleDateString();
+        const completedToday = habit.completedDates.includes(today);
+        
+        html += `
+            <div class="habit-item">
+                <div class="habit-info">
+                    <h4>${habit.name}</h4>
+                    <div class="habit-stats">
+                        <span class="streak">🔥 ${habit.streak} day streak</span>
+                        <span class="total">✅ ${habit.completedDates.length} total</span>
+                    </div>
+                </div>
+                <div class="habit-actions">
+                    ${!completedToday ? 
+                        `<button onclick="completeHabit(${habit.id})">✅ Complete</button>` : 
+                        '<span class="completed-badge">✅ Done Today!</span>'
+                    }
+                    <button onclick="removeHabit(${habit.id})">🗑️</button>
+                </div>
+            </div>
+        `;
+    });
+    
+    habitsList.innerHTML = html;
+}
+
+function completeHabit(habitId) {
+    const habit = habitData.find(h => h.id === habitId);
+    const today = new Date().toLocaleDateString();
+    
+    if (habit && !habit.completedDates.includes(today)) {
+        habit.completedDates.push(today);
+        habit.streak++;
+        localStorage.setItem('habitData', JSON.stringify(habitData));
+        displayHabits();
+        
+        if (habit.streak === 7) {
+            alert('🎉 Amazing! You\'ve completed a full week of ' + habit.name + '!');
+        } else if (habit.streak === 30) {
+            alert('🏆 Incredible! 30 days of ' + habit.name + '! You\'re building lasting change!');
+        }
+    }
+}
+
+function removeHabit(habitId) {
+    habitData = habitData.filter(h => h.id !== habitId);
+    localStorage.setItem('habitData', JSON.stringify(habitData));
+    displayHabits();
+}
+
+// Crisis Intervention System
+let crisisLevel = 0;
+
+function showCrisisIntervention() {
+    hideAllSections();
+    document.getElementById('crisis-intervention').classList.remove('hidden');
+    assessCrisisLevel();
+}
+
+function assessCrisisLevel() {
+    const assessment = document.getElementById('crisis-assessment');
+    assessment.innerHTML = `
+        <div class="crisis-questions">
+            <h3>🛡️ Safety Check</h3>
+            <p>Please answer honestly - this helps us provide the right support:</p>
+            
+            <div class="question">
+                <p>Are you having thoughts of hurting yourself?</p>
+                <button onclick="setCrisisLevel(5)">Yes, right now</button>
+                <button onclick="setCrisisLevel(3)">Sometimes</button>
+                <button onclick="setCrisisLevel(1)">No</button>
+            </div>
+            
+            <div class="question">
+                <p>Do you feel like you can't cope with your current situation?</p>
+                <button onclick="setCrisisLevel(4)">Completely overwhelmed</button>
+                <button onclick="setCrisisLevel(2)">Struggling but managing</button>
+                <button onclick="setCrisisLevel(1)">I can cope</button>
+            </div>
+            
+            <div class="question">
+                <p>Do you have people you can reach out to for support?</p>
+                <button onclick="setCrisisLevel(1)">Yes, several people</button>
+                <button onclick="setCrisisLevel(2)">One or two people</button>
+                <button onclick="setCrisisLevel(4)">No one available</button>
+            </div>
+        </div>
+    `;
+}
+
+function setCrisisLevel(level) {
+    crisisLevel = Math.max(crisisLevel, level);
+    showCrisisResponse();
+}
+
+function showCrisisResponse() {
+    const response = document.getElementById('crisis-response');
+    
+    if (crisisLevel >= 5) {
+        response.innerHTML = `
+            <div class="crisis-urgent">
+                <h3>🚨 Immediate Help Needed</h3>
+                <p>Your safety is the top priority. Please reach out for help right now:</p>
+                <div class="emergency-contacts">
+                    <a href="tel:988" class="emergency-btn">📞 Call 988 (Suicide & Crisis Lifeline)</a>
+                    <a href="tel:911" class="emergency-btn">🚨 Call 911 (Emergency)</a>
+                    <a href="sms:741741" class="emergency-btn">💬 Text HOME to 741741</a>
+                </div>
+                <p>You are not alone. Help is available 24/7.</p>
+            </div>
+        `;
+    } else if (crisisLevel >= 3) {
+        response.innerHTML = `
+            <div class="crisis-moderate">
+                <h3>⚠️ You Need Support</h3>
+                <p>It sounds like you're going through a difficult time. Here are some immediate steps:</p>
+                <ul>
+                    <li>📞 Call a trusted friend or family member</li>
+                    <li>🏥 Consider visiting a mental health professional</li>
+                    <li>📱 Use our AI Companion for immediate support</li>
+                    <li>🧘 Try our breathing exercises or meditation</li>
+                </ul>
+                <div class="support-actions">
+                    <button onclick="showAICompanion()">💬 Talk to AI Companion</button>
+                    <button onclick="showBreathingExercise()">🌬️ Breathing Exercise</button>
+                    <button onclick="showEmergencyResources()">📞 Get Help Numbers</button>
+                </div>
+            </div>
+        `;
+    } else {
+        response.innerHTML = `
+            <div class="crisis-low">
+                <h3>💚 You're Managing Well</h3>
+                <p>It's great that you're checking in with yourself. Here are some ways to maintain your wellbeing:</p>
+                <ul>
+                    <li>🎯 Set small, achievable daily goals</li>
+                    <li>🤝 Stay connected with supportive people</li>
+                    <li>🧘 Practice regular self-care</li>
+                    <li>📊 Track your mood and progress</li>
+                </ul>
+                <div class="wellness-actions">
+                    <button onclick="showGoalSetting()">🎯 Set Wellness Goals</button>
+                    <button onclick="showSelfCare()">🌱 Self-Care Activities</button>
+                    <button onclick="showMoodCheck()">💭 Mood Check-in</button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+// Personalized Recommendations Engine
+function generatePersonalizedRecommendations() {
+    const recentMoods = moodLog.slice(-7);
+    const commonMoods = {};
+    
+    recentMoods.forEach(entry => {
+        commonMoods[entry.mood] = (commonMoods[entry.mood] || 0) + 1;
+    });
+    
+    const dominantMood = Object.keys(commonMoods).reduce((a, b) => 
+        commonMoods[a] > commonMoods[b] ? a : b, 'neutral');
+    
+    const recommendations = {
+        anxiety: [
+            { type: 'breathing', title: '🌬️ Try breathing exercises', action: 'showBreathingExercise()' },
+            { type: 'meditation', title: '🧘 Practice meditation', action: 'showMeditationGarden()' },
+            { type: 'thought-record', title: '📝 Challenge anxious thoughts', action: 'showThoughtRecord()' }
+        ],
+        sadness: [
+            { type: 'self-care', title: '🌱 Focus on self-care', action: 'showSelfCare()' },
+            { type: 'community', title: '🤝 Connect with others', action: 'showCommunityHub()' },
+            { type: 'goals', title: '🎯 Set small achievable goals', action: 'showGoalSetting()' }
+        ],
+        stress: [
+            { type: 'games', title: '🎮 Try wellness games', action: 'showWellnessGames()' },
+            { type: 'music', title: '🎵 Listen to healing music', action: 'showMusicTherapy()' },
+            { type: 'art', title: '🎨 Express through art', action: 'showArtTherapy()' }
+        ]
+    };
+    
+    return recommendations[dominantMood] || recommendations.anxiety;
+}
+
+function showPersonalizedDashboard() {
+    hideAllSections();
+    document.getElementById('personalized-dashboard').classList.remove('hidden');
+    
+    const recommendations = generatePersonalizedRecommendations();
+    const dashboardContent = document.getElementById('dashboard-content');
+    
+    let html = `
+        <div class="personalized-content">
+            <h3>🎯 Recommended for You</h3>
+            <div class="recommendations">
+    `;
+    
+    recommendations.forEach(rec => {
+        html += `
+            <div class="recommendation-card" onclick="${rec.action}">
+                <h4>${rec.title}</h4>
+                <p>Based on your recent mood patterns</p>
+            </div>
+        `;
+    });
+    
+    html += `
+            </div>
+            <div class="quick-stats">
+                <h3>📊 Your Week at a Glance</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">${moodLog.length}</span>
+                        <span class="stat-label">Total Check-ins</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${wellnessStreak}</span>
+                        <span class="stat-label">Day Streak</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">${habitData.length}</span>
+                        <span class="stat-label">Active Habits</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    dashboardContent.innerHTML = html;
+}
 
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
@@ -1654,6 +2471,32 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(() => {
         petData.happiness = Math.max(0, petData.happiness - 1);
         petData.energy = Math.max(0, petData.energy - 1);
+        
+        // Earn passive coins based on pet level
+        const level = Math.floor((petData.happiness + petData.health + petData.energy) / 30);
+        petData.coins = (petData.coins || 0) + Math.floor(level / 2);
+        
         localStorage.setItem('petData', JSON.stringify(petData));
+        if (document.getElementById('virtual-pet').classList.contains('hidden') === false) {
+            updatePetDisplay();
+        }
     }, 300000); // Every 5 minutes
+    
+    // Check for wellness streak
+    const lastCheckIn = localStorage.getItem('lastCheckIn');
+    const today = new Date().toDateString();
+    
+    if (lastCheckIn !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        
+        if (lastCheckIn === yesterday.toDateString()) {
+            wellnessStreak++;
+        } else if (lastCheckIn) {
+            wellnessStreak = 1;
+        }
+        
+        localStorage.setItem('wellnessStreak', JSON.stringify(wellnessStreak));
+        localStorage.setItem('lastCheckIn', today);
+    }
 });
