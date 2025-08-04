@@ -117,8 +117,96 @@ const selfCareActivities = {
 };
 
 function loadPage(page) {
-    window.location.hash = page;
-    location.reload();
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(section => {
+        section.classList.add('hidden');
+    });
+    
+    // Show target section
+    const targetSection = document.getElementById(page);
+    if (targetSection) {
+        targetSection.classList.remove('hidden');
+        window.location.hash = page;
+        
+        // Initialize page-specific content
+        initializePageContent(page);
+    }
+}
+
+function initializePageContent(page) {
+    switch(page) {
+        case 'affirmation':
+            getNewAffirmation();
+            displaySavedAffirmations();
+            break;
+        case 'goal-setting':
+            displayGoals();
+            break;
+        case 'mood-tracker':
+            displayMoodLog();
+            break;
+        case 'breathing-exercise':
+            resetBreathing();
+            break;
+        case 'thought-record':
+            displayThoughtHistory();
+            break;
+        case 'anxiety-tracker':
+            displayAnxietyInsights();
+            break;
+        case 'virtual-pet':
+            updatePetDisplay();
+            break;
+        case 'ai-companion':
+            loadChatHistory();
+            break;
+        case 'sleep-tracker':
+            displaySleepInsights();
+            break;
+        case 'safety-planning':
+            loadSafetyPlan();
+            break;
+        case 'progress-dashboard':
+            updateProgressStats();
+            break;
+        case 'community-hub':
+            loadCommunityContent();
+            break;
+        case 'art-therapy':
+            setTimeout(() => initializeCanvas(), 100);
+            break;
+        case 'education-hub':
+            loadEducationContent();
+            break;
+        case 'habit-tracker':
+            displayHabits();
+            break;
+        case 'crisis-intervention':
+            assessCrisisLevel();
+            break;
+        case 'personalized-dashboard':
+            const recommendations = generatePersonalizedRecommendations();
+            const dashboardContent = document.getElementById('dashboard-content');
+            let html = `<div class="personalized-content"><h3>🎯 Recommended for You</h3><div class="recommendations">`;
+            recommendations.forEach(rec => {
+                html += `<div class="recommendation-card" onclick="${rec.action}"><h4>${rec.title}</h4><p>Based on your recent mood patterns</p></div>`;
+            });
+            html += `</div><div class="quick-stats"><h3>📊 Your Week at a Glance</h3><div class="stat-grid"><div class="stat-item"><span class="stat-number">${moodLog.length}</span><span class="stat-label">Total Check-ins</span></div><div class="stat-item"><span class="stat-number">${wellnessStreak}</span><span class="stat-label">Day Streak</span></div><div class="stat-item"><span class="stat-number">${habitData.length}</span><span class="stat-label">Active Habits</span></div></div></div></div>`;
+            dashboardContent.innerHTML = html;
+            break;
+        case 'wellness-games':
+            flippedCards = [];
+            memoryScore = 0;
+            breathingGameActive = false;
+            moodMonsterHealth = 100;
+            foundWords = [];
+            colorSequence = [];
+            playerSequence = [];
+            gardenFlowers = 0;
+            stoneBalance = 0;
+            document.getElementById('game-area').innerHTML = '';
+            break;
+    }
 }
 
 function showMenu() {
@@ -127,89 +215,7 @@ function showMenu() {
 
 function initializePage() {
     const hash = window.location.hash.substring(1) || 'menu';
-    document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('hidden');
-    });
-    
-    const targetSection = document.getElementById(hash);
-    if (targetSection) {
-        targetSection.classList.remove('hidden');
-        
-        // Initialize page-specific content
-        switch(hash) {
-            case 'affirmation':
-                getNewAffirmation();
-                displaySavedAffirmations();
-                break;
-            case 'goal-setting':
-                displayGoals();
-                break;
-            case 'mood-tracker':
-                displayMoodLog();
-                break;
-            case 'breathing-exercise':
-                resetBreathing();
-                break;
-            case 'thought-record':
-                displayThoughtHistory();
-                break;
-            case 'anxiety-tracker':
-                displayAnxietyInsights();
-                break;
-            case 'virtual-pet':
-                updatePetDisplay();
-                break;
-            case 'ai-companion':
-                loadChatHistory();
-                break;
-            case 'sleep-tracker':
-                displaySleepInsights();
-                break;
-            case 'safety-planning':
-                loadSafetyPlan();
-                break;
-            case 'progress-dashboard':
-                updateProgressStats();
-                break;
-            case 'community-hub':
-                loadCommunityContent();
-                break;
-            case 'art-therapy':
-                setTimeout(() => initializeCanvas(), 100);
-                break;
-            case 'education-hub':
-                loadEducationContent();
-                break;
-            case 'habit-tracker':
-                displayHabits();
-                break;
-            case 'crisis-intervention':
-                assessCrisisLevel();
-                break;
-            case 'personalized-dashboard':
-                const recommendations = generatePersonalizedRecommendations();
-                const dashboardContent = document.getElementById('dashboard-content');
-                let html = `<div class="personalized-content"><h3>🎯 Recommended for You</h3><div class="recommendations">`;
-                recommendations.forEach(rec => {
-                    html += `<div class="recommendation-card" onclick="${rec.action}"><h4>${rec.title}</h4><p>Based on your recent mood patterns</p></div>`;
-                });
-                html += `</div><div class="quick-stats"><h3>📊 Your Week at a Glance</h3><div class="stat-grid"><div class="stat-item"><span class="stat-number">${moodLog.length}</span><span class="stat-label">Total Check-ins</span></div><div class="stat-item"><span class="stat-number">${wellnessStreak}</span><span class="stat-label">Day Streak</span></div><div class="stat-item"><span class="stat-number">${habitData.length}</span><span class="stat-label">Active Habits</span></div></div></div></div>`;
-                dashboardContent.innerHTML = html;
-                break;
-            case 'wellness-games':
-                flippedCards = [];
-                memoryScore = 0;
-                breathingGameActive = false;
-                moodMonsterHealth = 100;
-                foundWords = [];
-                colorSequence = [];
-                playerSequence = [];
-                gardenFlowers = 0;
-                stoneBalance = 0;
-                document.getElementById('game-area').innerHTML = '';
-                break;
-        }
-    }
+    loadPage(hash);
 }
 
 function showMoodCheck() {
