@@ -196,6 +196,18 @@ function initializePage() {
                 html += `</div><div class="quick-stats"><h3>📊 Your Week at a Glance</h3><div class="stat-grid"><div class="stat-item"><span class="stat-number">${moodLog.length}</span><span class="stat-label">Total Check-ins</span></div><div class="stat-item"><span class="stat-number">${wellnessStreak}</span><span class="stat-label">Day Streak</span></div><div class="stat-item"><span class="stat-number">${habitData.length}</span><span class="stat-label">Active Habits</span></div></div></div></div>`;
                 dashboardContent.innerHTML = html;
                 break;
+            case 'wellness-games':
+                flippedCards = [];
+                memoryScore = 0;
+                breathingGameActive = false;
+                moodMonsterHealth = 100;
+                foundWords = [];
+                colorSequence = [];
+                playerSequence = [];
+                gardenFlowers = 0;
+                stoneBalance = 0;
+                document.getElementById('game-area').innerHTML = '';
+                break;
         }
     }
 }
@@ -1148,20 +1160,7 @@ function saveSafetyPlan() {
 }
 
 function showWellnessGames() {
-    hideAllSections();
-    document.getElementById('wellness-games').classList.remove('hidden');
-    document.getElementById('game-area').innerHTML = '';
-    
-    // Reset game states
-    flippedCards = [];
-    memoryScore = 0;
-    breathingGameActive = false;
-    moodMonsterHealth = 100;
-    foundWords = [];
-    colorSequence = [];
-    playerSequence = [];
-    gardenFlowers = 0;
-    stoneBalance = 0;
+    loadPage('wellness-games');
 }
 
 // Game state variables
