@@ -118,19 +118,28 @@ const selfCareActivities = {
 
 function hideAllSections() {
     document.querySelectorAll('.section').forEach(section => {
-        section.classList.add('hidden');
+        section.style.opacity = '0';
+        setTimeout(() => section.classList.add('hidden'), 200);
     });
 }
 
-function showMenu() {
+function showSection(sectionId) {
     hideAllSections();
-    document.getElementById('menu').classList.remove('hidden');
+    setTimeout(() => {
+        const section = document.getElementById(sectionId);
+        section.classList.remove('hidden');
+        section.style.opacity = '0';
+        setTimeout(() => section.style.opacity = '1', 50);
+    }, 250);
+}
+
+function showMenu() {
+    showSection('menu');
 }
 
 function showMoodCheck() {
-    hideAllSections();
-    document.getElementById('mood-check').classList.remove('hidden');
-    document.getElementById('mood-result').innerHTML = '';
+    showSection('mood-check');
+    setTimeout(() => document.getElementById('mood-result').innerHTML = '', 300);
 }
 
 function updateIntensity(value) {
@@ -172,9 +181,8 @@ function logMood(mood, intensity = 5) {
 }
 
 function showCopingStrategies() {
-    hideAllSections();
-    document.getElementById('coping-strategies').classList.remove('hidden');
-    document.getElementById('strategies-result').innerHTML = '';
+    showSection('coping-strategies');
+    setTimeout(() => document.getElementById('strategies-result').innerHTML = '', 300);
 }
 
 function showStrategies(category) {
@@ -191,26 +199,24 @@ function showStrategies(category) {
 }
 
 function showAffirmation() {
-    hideAllSections();
-    document.getElementById('affirmation').classList.remove('hidden');
-    getNewAffirmation();
-    displaySavedAffirmations();
+    showSection('affirmation');
+    setTimeout(() => {
+        getNewAffirmation();
+        displaySavedAffirmations();
+    }, 300);
 }
 
 function showSelfCare() {
-    hideAllSections();
-    document.getElementById('self-care').classList.remove('hidden');
+    showSection('self-care');
 }
 
 function showGoalSetting() {
-    hideAllSections();
-    document.getElementById('goal-setting').classList.remove('hidden');
-    displayGoals();
+    showSection('goal-setting');
+    setTimeout(() => displayGoals(), 300);
 }
 
 function showWellnessGames() {
-    hideAllSections();
-    document.getElementById('wellness-games').classList.remove('hidden');
+    showSection('wellness-games');
 }
 
 function startActivity(activityType) {
@@ -305,9 +311,8 @@ function getNewAffirmation() {
 }
 
 function showMoodTracker() {
-    hideAllSections();
-    document.getElementById('mood-tracker').classList.remove('hidden');
-    displayMoodLog();
+    showSection('mood-tracker');
+    setTimeout(() => displayMoodLog(), 300);
 }
 
 function displayMoodLog() {
@@ -379,14 +384,12 @@ function removeSavedAffirmation(index) {
 }
 
 function showEmergencyResources() {
-    hideAllSections();
-    document.getElementById('emergency-resources').classList.remove('hidden');
+    showSection('emergency-resources');
 }
 
 function showBreathingExercise() {
-    hideAllSections();
-    document.getElementById('breathing-exercise').classList.remove('hidden');
-    resetBreathing();
+    showSection('breathing-exercise');
+    setTimeout(() => resetBreathing(), 300);
 }
 
 let breathingActive = false;
@@ -493,9 +496,8 @@ function resetBreathing() {
 
 // New Feature Functions
 function showThoughtRecord() {
-    hideAllSections();
-    document.getElementById('thought-record').classList.remove('hidden');
-    displayThoughtHistory();
+    showSection('thought-record');
+    setTimeout(() => displayThoughtHistory(), 300);
 }
 
 function saveThoughtRecord() {
@@ -539,9 +541,8 @@ function displayThoughtHistory() {
 }
 
 function showAnxietyTracker() {
-    hideAllSections();
-    document.getElementById('anxiety-tracker').classList.remove('hidden');
-    displayAnxietyInsights();
+    showSection('anxiety-tracker');
+    setTimeout(() => displayAnxietyInsights(), 300);
 }
 
 function toggleTrigger(trigger) {
@@ -604,9 +605,8 @@ function displayAnxietyInsights() {
 }
 
 function showVirtualPet() {
-    hideAllSections();
-    document.getElementById('virtual-pet').classList.remove('hidden');
-    updatePetDisplay();
+    showSection('virtual-pet');
+    setTimeout(() => updatePetDisplay(), 300);
 }
 
 function updatePetDisplay() {
