@@ -986,6 +986,18 @@ function saveSafetyPlan() {
 function showWellnessGames() {
     hideAllSections();
     document.getElementById('wellness-games').classList.remove('hidden');
+    document.getElementById('game-area').innerHTML = '';
+    
+    // Reset game states
+    flippedCards = [];
+    memoryScore = 0;
+    breathingGameActive = false;
+    moodMonsterHealth = 100;
+    foundWords = [];
+    colorSequence = [];
+    playerSequence = [];
+    gardenFlowers = 0;
+    stoneBalance = 0;
 }
 
 // Game state variables
@@ -1273,17 +1285,17 @@ function startBreathingGameRound() {
     const circle = document.getElementById('breathing-circle-game');
     const instructions = document.getElementById('breathing-instructions-game');
     
-    instructions.textContent = 'Breathe in... Click when the circle is biggest!';
+    instructions.textContent = 'Breathe in slowly... Click when you feel the peak!';
     circle.classList.add('inhale-game');
     
     setTimeout(() => {
-        instructions.textContent = 'NOW! Click the button!';
+        instructions.textContent = 'Perfect timing window - Click NOW!';
         setTimeout(() => {
             if (breathingGameActive) {
-                instructions.textContent = 'Too slow! Try again.';
+                instructions.textContent = 'Missed the window. Focus on your breath and try again.';
                 endBreathingRound();
             }
-        }, 1000);
+        }, 1500);
     }, 3000);
 }
 
@@ -1404,6 +1416,9 @@ function startWordCalm(gameArea) {
 
 function selectWord(index) {
     const cell = document.querySelectorAll('.word-cell')[index];
+    
+    if (cell.classList.contains('found')) return;
+    
     cell.classList.toggle('selected');
     
     const selected = document.querySelectorAll('.word-cell.selected');
@@ -1411,7 +1426,10 @@ function selectWord(index) {
     
     if (['PEACE', 'CALM', 'JOY', 'HOPE', 'LOVE'].includes(word) && !foundWords.includes(word)) {
         foundWords.push(word);
-        selected.forEach(c => c.classList.add('found'));
+        selected.forEach(c => {
+            c.classList.remove('selected');
+            c.classList.add('found');
+        });
         document.getElementById('found-count').textContent = foundWords.length;
         
         if (foundWords.length === 5) {
@@ -1469,13 +1487,15 @@ function colorClick(index) {
     playerSequence.push(index);
     
     if (playerSequence[playerSequence.length - 1] !== colorSequence[playerSequence.length - 1]) {
-        document.getElementById('color-message').textContent = 'Try again!';
-        setTimeout(startColorSequence, 1000);
+        document.getElementById('color-message').textContent = 'Incorrect sequence. Starting over...';
+        playerSequence = [];
+        colorSequence = [];
+        setTimeout(startColorSequence, 1500);
         return;
     }
     
     if (playerSequence.length === colorSequence.length) {
-        document.getElementById('color-message').textContent = `Perfect! Level ${colorSequence.length}`;
+        document.getElementById('color-message').textContent = `Perfect! Level ${colorSequence.length} complete!`;
         setTimeout(startColorSequence, 1500);
     }
 }
@@ -1537,7 +1557,9 @@ function startZenStones(gameArea) {
 }
 
 function dropStone() {
-    if (Math.random() > 0.3) {
+    const successRate = 0.7 - (stoneBalance * 0.05); // Gets harder as you progress
+    
+    if (Math.random() < successRate) {
         stoneBalance++;
         updateStones();
         document.getElementById('stone-count').textContent = stoneBalance;
@@ -1546,10 +1568,12 @@ function dropStone() {
             alert('🧘 Perfect balance achieved! Inner peace unlocked.');
         }
     } else {
-        alert('Stone fell! Try again with more focus.');
-        stoneBalance = Math.max(0, stoneBalance - 1);
-        updateStones();
-        document.getElementById('stone-count').textContent = stoneBalance;
+        if (stoneBalance > 0) {
+            stoneBalance = Math.max(0, stoneBalance - 1);
+            updateStones();
+            document.getElementById('stone-count').textContent = stoneBalance;
+        }
+        alert('Stone fell! Breathe deeply and try again with more focus.');
     }
 }
 
