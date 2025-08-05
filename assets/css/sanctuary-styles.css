@@ -749,6 +749,18 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Enhanced Games */
+.games-row {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+    justify-content: center;
+}
+
+.games-row .game-card {
+    flex: 1;
+    max-width: 300px;
+}
+
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -901,6 +913,11 @@ input[type="range"]::-webkit-slider-thumb {
     
     .games-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .games-row {
+        flex-direction: column;
+        align-items: center;
     }
     
     #breathing-circle {
