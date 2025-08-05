@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mood Check - Sanctuary of Apollo</title>
+    <title>Mood Oracle - Sanctuary of Apollo</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
 </head>
 <body>
@@ -11,30 +12,36 @@
         <nav class="hub-nav">
             <a href="index.html" class="hub-link">← Back to Sanctuary</a>
         </nav>
+        
         <header>
             <h1>💭 Mood Oracle</h1>
+            <p>Check in with your emotions and receive divine guidance</p>
         </header>
-        <main>
+
+        <main class="section">
             <h2>How are you feeling right now?</h2>
-            <p>Take a moment to check in with yourself. Your feelings are valid and important.</p>
+            
             <div class="mood-buttons">
-                <button onclick="selectMood('anxiety')">😰 Anxious/Worried</button>
-                <button onclick="selectMood('sadness')">😢 Sad/Down</button>
-                <button onclick="selectMood('anger')">😠 Angry/Frustrated</button>
-                <button onclick="selectMood('stress')">😵 Stressed/Overwhelmed</button>
-                <button onclick="selectMood('lonely')">😔 Lonely/Isolated</button>
-                <button onclick="selectMood('confused')">😕 Confused/Lost</button>
-                <button onclick="selectMood('happy')">😊 Happy/Good</button>
-                <button onclick="selectMood('excited')">😄 Excited/Energetic</button>
+                <button onclick="selectMood('happy')">😊 Happy</button>
+                <button onclick="selectMood('sad')">😢 Sad</button>
+                <button onclick="selectMood('anxious')">😰 Anxious</button>
+                <button onclick="selectMood('angry')">😡 Angry</button>
+                <button onclick="selectMood('stressed')">😵 Stressed</button>
+                <button onclick="selectMood('excited')">🤩 Excited</button>
+                <button onclick="selectMood('lonely')">😔 Lonely</button>
+                <button onclick="selectMood('confused')">🤔 Confused</button>
             </div>
-            <div id="mood-intensity">
-                <h3>How intense is this feeling? (1-10)</h3>
+
+            <div class="form-group">
+                <label for="intensity-slider">Intensity (1-10):</label>
                 <input type="range" id="intensity-slider" min="1" max="10" value="5" oninput="updateIntensity(this.value)">
                 <span id="intensity-value">5</span>
             </div>
+
             <div id="mood-result"></div>
         </main>
     </div>
+
     <script src="../assets/js/sanctuary.js"></script>
 </body>
 </html>

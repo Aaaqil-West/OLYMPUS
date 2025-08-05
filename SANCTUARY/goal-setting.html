@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Goals - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        
+        <header>
+            <h1>🎯 Wellness Goals</h1>
+            <p>Set and track your healing journey</p>
+        </header>
+
+        <main class="section">
+            <div class="form-group">
+                <input type="text" id="goal-input" placeholder="Enter your wellness goal...">
+                <select id="goal-timeframe">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+                <button onclick="addGoal()">Add Goal</button>
+            </div>
+
+            <div id="goals-list"></div>
+        </main>
+    </div>
+
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>

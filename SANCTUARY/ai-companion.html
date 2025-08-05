@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Companion - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        
+        <header>
+            <h1>🤖 AI Companion</h1>
+            <p>Your divine guide for support and wisdom</p>
+        </header>
+
+        <main class="section">
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages"></div>
+                
+                <div class="chat-input">
+                    <input type="text" id="user-input" placeholder="Share your thoughts..." onkeypress="handleChatEnter(event)">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+
+                <div class="quick-responses">
+                    <button onclick="quickResponse('anxious')">I'm anxious</button>
+                    <button onclick="quickResponse('sad')">I'm sad</button>
+                    <button onclick="quickResponse('stressed')">I'm stressed</button>
+                    <button onclick="quickResponse('help')">I need help</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>

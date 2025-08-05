@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation Garden - Sanctuary of Apollo</title>
+    <link rel="stylesheet" href="../assets/css/sanctuary-styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="hub-nav">
+            <a href="index.html" class="hub-link">← Back to Sanctuary</a>
+        </nav>
+        
+        <header>
+            <h1>🧘 Meditation Garden</h1>
+            <p>Find peace in Apollo's sacred garden</p>
+        </header>
+
+        <main class="section">
+            <div class="meditation-scene">
+                <div class="scene-elements">🌸 🌿 ☀️ 🦋 🌺</div>
+            </div>
+
+            <div class="meditation-controls">
+                <button onclick="startMeditation('mindfulness')">Mindfulness (5 min)</button>
+                <button onclick="startMeditation('body-scan')">Body Scan (10 min)</button>
+                <button onclick="startMeditation('loving-kindness')">Loving Kindness (7 min)</button>
+                <button onclick="startMeditation('anxiety-relief')">Anxiety Relief (8 min)</button>
+            </div>
+
+            <div id="meditation-player" class="hidden">
+                <div id="meditation-timer">05:00</div>
+                <div id="meditation-instructions">Starting meditation...</div>
+                <button id="meditation-pause" onclick="pauseMeditation()">Pause</button>
+                <button onclick="stopMeditation()">Stop</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="../assets/js/sanctuary.js"></script>
+</body>
+</html>
