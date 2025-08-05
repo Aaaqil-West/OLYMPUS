@@ -1407,7 +1407,7 @@ function showGameHelp(gameType) {
                 <p>${game.benefits}</p>
                 <div class="help-actions">
                     <button onclick="playGame('${gameType}')">Play Game</button>
-                    <button onclick="showWellnessGames()">Back to Games</button>
+                    <button onclick="location.reload()">Back to Games</button>
                 </div>
             </div>
         </div>
